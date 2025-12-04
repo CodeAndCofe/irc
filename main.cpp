@@ -6,13 +6,19 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:09:01 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/04 15:50:23 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/04 17:48:34 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "headers/Server.hpp"
 
+int	flag = 0;
 
+void	handler_signal(int	sig)
+{
+	if (sig == SIGINT)
+		flag = 1;
+}
 
 int	main(int arc, char **arv)
 {
@@ -50,8 +56,11 @@ int	main(int arc, char **arv)
 	fds.events = POLLIN;
 	myServer.setfds(fds);
 	std::cout << "---------Server Started---------" << std::endl;
+	std::signal(SIGINT, handler_signal);
 	while (true)
 	{
 		myServer.return_events(client_address);
+		if (flag == 1)
+			break ;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:31:53 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/04 17:22:58 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/04 18:20:25 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,11 @@ Server	&Server::operator=(Server &copy)
 
 Server::~Server()
 {
-	
+	for (size_t i = 1; i < fds.size(); i++)
+	{
+		close(fds[i].fd);
+	}
+	close(this->ser);
 }
 
 int	Server::Create_Socket()
@@ -54,10 +58,15 @@ void	Server::setfds(struct pollfd fds)
 }
 
 
+void	Server::setClient(Client client)
+{
+	this->clients.push_back(client);
+}
 
 int		Server::return_events(sockaddr_in client_address)
 {
 	int	fd;
+	Client			new_client;
 	struct	pollfd newfds;
 	poll(this->fds.data(), fds.size(), -1);
 	for (size_t i = 0; i < fds.size(); i++)
@@ -76,14 +85,17 @@ int		Server::return_events(sockaddr_in client_address)
 			newfds.fd = fd;
 			newfds.events = POLLIN;
 			this->setfds(newfds);
+			new_client.fd = fd;
+			this->setClient(new_client);
 			std::cout << "New client connected: " << fd << std::endl;
 		}
 		if (fds[i].fd != this->ser && (fds[i].revents & POLLIN))
 		{
-			if (client_message(fds[i]) < 0)
+			if (client_message(this->clients[i - 1]) < 0)
 			{
 				std::cout << "Client disconnected: " << fds[i].fd << std::endl;
                 close(fds[i].fd);
+				this->clients.erase(clients.begin() + (i - 1));
                 fds.erase(fds.begin() + i);
                 i--;
 			}

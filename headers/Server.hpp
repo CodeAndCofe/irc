@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:07:32 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/04 17:17:13 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/04 18:21:39 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,31 @@
 #include <csignal>
 #include <vector>
 
+typedef struct	t_Client
+{
+	int	fd;
+	std::string	nickname;
+	std::string	username;
+	std::string realname;
+	std::string mssg;
+	std::string chanel;
+}Client;
+
 class	Server
 {
 	private:
 		int	port;
 		int	ser;
-		std::string	password;
-		static bool Ssignal;
-		std::vector<struct pollfd> fds;
 		
+		std::string	password;
+		std::vector<struct pollfd> fds;
+		std::vector<Client> clients;
 		
 	public:
 		int	Create_Socket();
 		int	return_events(sockaddr_in client_address);
 		void	setfds(struct pollfd fds);
+		void	setClient(Client client);
 		Server();
 		Server(int port, int password);
 		Server(Server &copy);
@@ -43,8 +54,7 @@ class	Server
 		~Server(); 
 		
 };
-int	client_message(struct pollfd &fds);
-#define JOIN 11
-#define OTHER 22
+int	client_message(Client &t_client);
+
 
 #endif
