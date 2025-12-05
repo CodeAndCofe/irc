@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:09:01 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/04 17:48:34 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/05 12:44:50 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ int	main(int arc, char **arv)
 	std::signal(SIGINT, handler_signal);
 	while (true)
 	{
-		myServer.return_events(client_address);
+		if (myServer.return_events(client_address) == 1)
+			return (1);
 		if (flag == 1)
 			break ;
 	}

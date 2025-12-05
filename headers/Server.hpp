@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:07:32 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/04 18:21:39 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/05 12:38:57 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct	t_Client
 	std::string	username;
 	std::string realname;
 	std::string mssg;
-	std::string chanel;
+	// std::string chanel;
 }Client;
 
 class	Server
@@ -44,6 +44,7 @@ class	Server
 		
 	public:
 		int	Create_Socket();
+		int	new_client(sockaddr_in client_address, int i);
 		int	return_events(sockaddr_in client_address);
 		void	setfds(struct pollfd fds);
 		void	setClient(Client client);
