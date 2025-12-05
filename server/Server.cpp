@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:31:53 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/05 12:50:11 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/05 13:22:46 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,14 @@ int		Server::new_client(sockaddr_in client_address, int i)
 	return (0);
 }
 
+
+void	Server::erase_client(int i)
+{
+	close(fds[i].fd);
+	this->clients.erase(clients.begin() + (i - 1));
+    fds.erase(fds.begin() + i);
+}
+
 int		Server::return_events(sockaddr_in client_address)
 {
 	if (poll(this->fds.data(), fds.size(), -1) < 0)
@@ -104,18 +112,14 @@ int		Server::return_events(sockaddr_in client_address)
 			if (client_message(this->clients[i - 1]) < 0)
 			{
 				std::cout << "Client disconnected: " << fds[i].fd << std::endl;
-                close(fds[i].fd);
-				this->clients.erase(clients.begin() + (i - 1));
-                fds.erase(fds.begin() + i);
+				this->erase_client(i);
                 i--;
 			}
 		}
 		if (fds[i].fd != this->ser && (fds[i].revents & POLLHUP))
 		{
 			std::cout << "Client disconnected: " << fds[i].fd << std::endl;
-            close(fds[i].fd);
-			this->clients.erase(clients.begin() + (i - 1));
-            fds.erase(fds.begin() + i);
+            this->erase_client(i);
             i--;
 		}
 	}
