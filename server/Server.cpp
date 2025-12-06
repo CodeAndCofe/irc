@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:31:53 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/05 13:22:46 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/05 13:37:41 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ int		Server::new_client(sockaddr_in client_address, int i)
 	std::cout << "New client connected: " << fd << std::endl;
 	return (0);
 }
-
 
 void	Server::erase_client(int i)
 {
