@@ -6,15 +6,17 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:30:07 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/08 15:53:49 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/08 16:06:24 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/Server.hpp"
 
 
-int	client_message(Client &t_client)
+int	client_message(Client &t_client, std::vector<Client> &clients)
 {
+	if (!clients.data())
+		return (0);
 	char	message[2050];
 
 	int	byte = recv(t_client.getFd(), message, sizeof(message) - 1, MSG_DONTWAIT);

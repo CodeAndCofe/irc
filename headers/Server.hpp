@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:07:32 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/08 15:55:17 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/08 16:05:43 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ class	Server
 		~Server(); 
 		
 };
-int	client_message(Client &t_client);
+int	client_message(Client &t_client, std::vector<Client> &clients);
 
 
 #endif
