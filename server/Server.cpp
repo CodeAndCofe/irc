@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:31:53 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/05 13:37:41 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/08 15:53:32 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	Server::setfds(struct pollfd fds)
 }
 
 
-void	Server::setClient(Client client)
+void	Server::setClient(Client &client)
 {
 	this->clients.push_back(client);
 }
@@ -66,7 +66,7 @@ void	Server::setClient(Client client)
 int		Server::new_client(sockaddr_in client_address, int i)
 {
 	int	fd;
-	Client			new_client;
+	Client	new_client;
 	struct	pollfd newfds;
 	socklen_t	client_len = sizeof(client_address);
 	fd = accept(this->ser, (struct sockaddr *) &client_address, &client_len);
@@ -79,7 +79,7 @@ int		Server::new_client(sockaddr_in client_address, int i)
 	newfds.fd = fd;
 	newfds.events = POLLIN;
 	this->setfds(newfds);
-	new_client.fd = fd;
+	new_client.setFd(fd);
 	this->setClient(new_client);
 	std::cout << "New client connected: " << fd << std::endl;
 	return (0);

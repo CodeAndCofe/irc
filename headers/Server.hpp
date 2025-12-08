@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:07:32 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/05 13:21:22 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/08 15:55:17 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@
 #include <vector>
 #include <csignal>
 #include <vector>
-
-typedef struct	t_Client
-{
-	int	fd;
-	std::string	nickname;
-	std::string	username;
-	std::string realname;
-	std::string mssg;
-	// std::string chanel;
-}Client;
+#include "Client.hpp"
+// typedef struct	t_Client
+// {
+// 	int	fd;
+// 	std::string	nickname;
+// 	std::string	username;
+// 	std::string realname;
+// 	std::string mssg;
+// 	// std::string chanel;
+// }Client;
 
 class	Server
 {
@@ -48,7 +48,7 @@ class	Server
 		void	erase_client(int i);
 		int	return_events(sockaddr_in client_address);
 		void	setfds(struct pollfd fds);
-		void	setClient(Client client);
+		void	setClient(Client &client);
 		Server();
 		Server(int port, int password);
 		Server(Server &copy);

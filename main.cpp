@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:09:01 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/05 12:44:50 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/07 03:55:08 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	main(int arc, char **arv)
 		return (std::cerr << "listen function faild" << std::endl, 1);
 	}
 	fds.fd = socket_fd;
-	fds.events = POLLIN;
+	fds.events = POLLIN;//connection
 	myServer.setfds(fds);
 	std::cout << "---------Server Started---------" << std::endl;
 	std::signal(SIGINT, handler_signal);
