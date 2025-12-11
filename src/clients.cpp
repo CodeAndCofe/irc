@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:30:07 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/11 14:54:33 by marvin           ###   ########.fr       */
+/*   Updated: 2025/12/11 15:01:46 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,24 @@ int	client_acess(Client &t_client, std::string password)
 {
 	if (!t_client.getHaspass())
 	{
-		std::pass = command_wrong(t_client.getBuffer(), "PASS")
+		std::string pass = command_wrong(t_client.getBuffer(), "PASS")
 		if (pass == NULL || pass != password)
 			return (-1);
 	}
 	return (1);
 }
+
+
+// int	client_nick(Client &t_client, std::string password)
+// {
+// 	if (!t_client.getHaspass())
+// 	{
+// 		std::string pass = command_wrong(t_client.getBuffer(), "PASS")
+// 		if (pass == NULL || pass != password)
+// 			return (-1);
+// 	}
+// 	return (1);
+// }
 
 int	client_message(Client &t_client, std::vector<Client> &clients, std::string password)
 {
