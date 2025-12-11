@@ -6,7 +6,7 @@
 /*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 21:18:32 by amandour          #+#    #+#             */
-/*   Updated: 2025/12/10 18:09:17 by amandour         ###   ########.fr       */
+/*   Updated: 2025/12/11 15:06:49 by amandour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,4 +124,47 @@ bool Channel::isAdmine(Client client)
 void Channel::inviteClient(Client client)
 {
 	invited.push_back(client);
+}
+
+void Channel::kickMember(Client client)
+{
+	std::vector<Client>::iterator it = members.begin();
+	while (it != members.end())
+	{
+		if (client.getFd() == it->getFd())
+		{
+			this->members.erase(it);
+			return ;
+		}
+		it++;
+	}
+	if (isInvited(client))
+	{
+		std::vector<Client>::iterator it = invited.begin();
+		while (it != invited.end())
+		{
+			if (client.getFd() == it->getFd())
+			{
+				this->invited.erase(it);
+				return ;
+			}
+			it++;
+		}
+	}
+}
+
+void Channel::sendKickingMsg(Client sender, Channel channel, Client target, std::string comment)
+{
+    std::vector<Client>& members = channel.getMembers();
+    for (size_t i = 0; i < members.size(); i++)
+    {
+		if (target.getFd() != members[i].getFd())
+			Server::send_msg(RPL_KICKMSG(sender.getNickname() + "!~" + sender.getUserName() + "@" + sender.getIpadd(), channel.getName(), target.getNickname(), comment), members[i].getFd());
+    }
+	Server::send_msg(RPL_KICKNOCOMMENT(sender.getNickname() + "!~" + sender.getUserName() + "@" + sender.getIpadd(), channel.getName(), target.getNickname()), target.getFd());
+}
+
+bool   Channel::getTopicMode()
+{
+	return topicMode;
 }

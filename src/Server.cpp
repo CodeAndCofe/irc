@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -9,6 +10,9 @@
 /*   Updated: 2025/12/11 14:45:03 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+=======
+
+>>>>>>> channel funcs
 
 #include "../headers/Server.hpp"
 #include "../headers/Channel.hpp"
@@ -170,7 +174,7 @@ void Server::CommandHandler(int fd, std::string &data, Client *client)
         data.pop_back();
      if (!std::strncmp(data.c_str(), "JOIN ", 5))
         join(fd, data, client);
-	  else if (!std::strncmp(data.c_str(), "TOPIC ", 5))
+	  else if (!std::strncmp(data.c_str(), "TOPIC ", 6))
 		topic(data, client);
     else if (!std::strncmp(data.c_str(), "INVITE ", 7))
         invite(data, *client);

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -9,6 +10,8 @@
 /*   Updated: 2025/12/11 14:46:41 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+=======
+>>>>>>> channel funcs
 
 #ifndef SERVER_HPP
 # define SERVER_HPP
@@ -56,8 +59,12 @@ class	Server
 		 static void        send_msg(std::string data, int fd);
 		 static std::vector<std::string>  split(const std::string &str, char delimiter);
 	     void               leaveAll(Client *user);
+<<<<<<< HEAD
 		 Channel      *getChannel(std::string name);
 		 void      join(int fd, std::string data, Client *user);
+=======
+		 void       join(int fd, std::string data, Client *user);
+>>>>>>> channel funcs
 		 void 	   invite(std::string data, Client client);
 		 void      kick(std::string data, Client client);
 		 void      topic(std::string data, Client *client);
