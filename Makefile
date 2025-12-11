@@ -1,8 +1,8 @@
 CPP= c++
 FLAGS= -Wall -Werror -Wextra
-SRC= server/Server.cpp main.cpp server/clients.cpp Client.cpp
+SRC= src/Server.cpp src/main.cpp src/clients.cpp src/Client.cpp src/join.cpp src/Channel.cpp src/kick.cpp src/topic.cpp src/invite.cpp
 OBJ= $(SRC:.cpp=.o)
-HEADERS= headers/Server.hpp headers/Client.hpp
+HEADERS= headers/Server.hpp headers/Client.hpp headers/Channel.hpp headers/RepErr.hpp 
 NAME= ft_irc
 
 all: $(NAME)

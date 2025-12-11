@@ -1,0 +1,68 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   invite.cpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/10 17:45:17 by amandour          #+#    #+#             */
+/*   Updated: 2025/12/10 18:10:30 by amandour         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../headers/Channel.hpp"
+#include "../headers/Client.hpp"
+#include "../headers/Server.hpp"
+#include <cstddef>
+#include <vector>
+
+void Server::invite(std::string data, Client client)
+{
+	std::vector<std::string> command = Server::split(data, ' ');
+
+	if (command.size() < 3)
+	{
+		Server::send_msg(ERR_MISSINGPARAMS(data), client.getFd());
+		return ;
+	}
+	if (command[2][0] != '#')
+	{
+		Server::send_msg(ERR_BADCHANMASK(command[2]), client.getFd());
+		return ;
+	}
+	Client *newMember = getClient(command[1]);
+	if (!newMember)
+	{
+		Server::send_msg(ERR_NOSUCHNICK(command[1]), client.getFd());
+		return;
+	}
+	Channel *channel = getChannel(command[2]);
+	if (!channel)
+	{
+		Server::send_msg(ERR_CHANNELNOTFOUND(command[2]), client.getFd());
+		return ;
+	}
+	if (!channel->memberExist(client))
+	{
+		Server::send_msg(ERR_NOTONCHANNEL(client.getNickname(), command[2]), client.getFd());
+		return ;
+	}
+	if (channel->memberExist(*newMember))
+	{
+		Server::send_msg(ERR_USERONCHANNEL(command[2], command[1]), client.getFd());
+		return ;
+	}
+	if (channel->getInvOnlyMode() && !channel->isAdmine(client))
+	{
+		Server::send_msg(ERR_NOTCHANOP(command[2]), client.getFd());
+		return ;
+	}
+	if (channel->getlimits() && channel->getMembers().size() + 1 > channel->getlimits())
+	{
+		Server::send_msg(ERR_CHANNELISFULL(client.getNickname(), command[1]), client.getFd());
+		return ;
+	}
+
+	channel->inviteClient(*newMember);
+	Server::send_msg(RPL_INVITING(client.getNickname(), newMember->getNickname(), channel->getName()), client.getFd());
+}

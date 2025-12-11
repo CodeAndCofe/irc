@@ -3,10 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:07:32 by aferryat          #+#    #+#             */
 /*   Updated: 2025/12/11 13:15:18 by marvin           ###   ########.fr       */
+=======
+/*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/01 12:07:32 by aferryat          #+#    #+#             */
+/*   Updated: 2025/12/10 18:39:11 by amandour         ###   ########.fr       */
+>>>>>>> cmds
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +23,7 @@
 #include <iostream>
 #include <sys/socket.h>
 #include <unistd.h>
+#include <sstream>
 #include <netinet/in.h>
 #include <poll.h>
 #include <vector>
@@ -23,6 +31,8 @@
 #include <vector>
 #include <cctype>
 #include "Client.hpp"
+#include "RepErr.hpp"
+#include "Channel.hpp"
 // typedef struct	t_Client
 // {
 // 	int	fd;
@@ -42,6 +52,7 @@ class	Server
 		std::string	password;
 		std::vector<struct pollfd> fds;
 		std::vector<Client> clients;
+        std::vector<Channel>           _channels;
 		
 	public:
 		int	Create_Socket();
@@ -55,9 +66,22 @@ class	Server
 		Server(Server &copy);
 		Server &operator=(Server &copy);
 		~Server(); 
+		//asmae
+		Client   *getClient(std::string client);
+		Channel  *getChannel(std::string channel);
+		 static void        send_msg(std::string data, int fd);
+		 static std::vector<std::string>  split(const std::string &str, char delimiter);
+	     void               leaveAll(Client *user);
+		 Channel      *getChannel(std::string name);
+		 void       join(int fd, std::string data, Client *user);
+		 void 	   invite(std::string data, Client client);
+		 void      kick(std::string data, Client client);
+		 void       topic(std::string data, Client *client);
+		 void      CommandHandler(int fd, std::string &data, Client *client);
 		
 };
 int	client_message(Client &t_client, std::vector<Client> &clients);
+
 
 
 #endif

@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD:server/Server.cpp
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:31:53 by aferryat          #+#    #+#             */
 /*   Updated: 2025/12/11 12:15:34 by marvin           ###   ########.fr       */
+=======
+/*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/01 12:31:53 by aferryat          #+#    #+#             */
+/*   Updated: 2025/12/10 19:19:47 by amandour         ###   ########.fr       */
+>>>>>>> cmds:src/Server.cpp
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/Server.hpp"
+#include "../headers/Channel.hpp"
 
 Server::Server()
 {
@@ -80,6 +88,7 @@ int		Server::new_client(sockaddr_in client_address, int i)
 	newfds.events = POLLIN;
 	this->setfds(newfds);
 	new_client.setFd(fd);
+	new_client.setNickname("User" + std::to_string(fd));
 	this->setClient(new_client);
 	std::cout << "New client connected: " << fd << std::endl;
 	return (0);
@@ -123,4 +132,57 @@ int		Server::return_events(sockaddr_in client_address)
 		}
 	}
 	return (0);
+}
+
+//asmae
+void  Server::send_msg(std::string data, int fd)
+{
+    send(fd, data.c_str(), data.size(), 0);
+}
+
+std::vector<std::string> Server::split(const std::string &str, char delimiter)
+{
+    std::vector<std::string> result;
+    std::stringstream ss(str);
+    std::string token;
+
+    while (std::getline(ss, token, delimiter))
+        result.push_back(token);
+    return result;
+}
+
+Channel *Server::getChannel(std::string name)
+{
+	for (size_t i = 0; i < _channels.size(); i++)
+	{
+		if (name == _channels[i].getName())
+			return &_channels[i];
+	}
+	return NULL;
+}
+
+
+Client *Server::getClient(std::string client)
+{
+	for (size_t i = 0; i < clients.size(); i++)
+	{
+		if (client == clients[i].getNickname())
+			return &clients[i];
+	}
+	return NULL;
+}
+void Server::CommandHandler(int fd, std::string &data, Client *client)
+{
+	while (!data.empty() && (data.back() == '\r' || data.back() == '\n'))
+        data.pop_back();
+     if (!std::strncmp(data.c_str(), "JOIN ", 5))
+        join(fd, data, client);
+	  else if (!std::strncmp(data.c_str(), "TOPIC ", 5))
+		topic(data, client);
+    else if (!std::strncmp(data.c_str(), "INVITE ", 7))
+        invite(data, *client);
+	  else if (!std::strncmp(data.c_str(), "NICK ", 5))
+		topic(data, client);
+    else
+        Server::send_msg(ERR_INVALIDCOMMAND(client->getNickname(), data), client->getFd());
 }
