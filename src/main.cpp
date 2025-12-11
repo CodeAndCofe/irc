@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:09:01 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/10 17:23:24 by amandour         ###   ########.fr       */
+/*   Updated: 2025/12/11 14:20:41 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,11 @@ int	main(int arc, char **arv)
 	struct	sockaddr_in	client_address;
 	struct	pollfd		fds;
 	int					port;
-	int					password = 0;
 	int					socket_fd;
 	if (arc != 3)
 		return (std::cerr << "invalid executing: should be (./ft_irc \"port\" \"password\")" << std::endl, 1);
 	port = std::atoi(arv[1]);
-	Server	myServer(port, password);
+	Server	myServer(port, arv[2]);
 	socket_fd = myServer.Create_Socket();
 	if (socket_fd < 0)
 	{

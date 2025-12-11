@@ -3,17 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:07:32 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/11 13:15:18 by marvin           ###   ########.fr       */
-=======
-/*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/01 12:07:32 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/10 18:39:11 by amandour         ###   ########.fr       */
->>>>>>> cmds
+/*   Updated: 2025/12/11 14:46:41 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +26,6 @@
 #include "Client.hpp"
 #include "RepErr.hpp"
 #include "Channel.hpp"
-// typedef struct	t_Client
-// {
-// 	int	fd;
-// 	std::string	nickname;
-// 	std::string	username;
-// 	std::string realname;
-// 	std::string mssg;
-// 	// std::string chanel;
-// }Client;
 
 class	Server
 {
@@ -62,7 +46,7 @@ class	Server
 		void	setfds(struct pollfd fds);
 		void	setClient(Client &client);
 		Server();
-		Server(int port, int password);
+		Server(int port, char *password);
 		Server(Server &copy);
 		Server &operator=(Server &copy);
 		~Server(); 
@@ -73,15 +57,14 @@ class	Server
 		 static std::vector<std::string>  split(const std::string &str, char delimiter);
 	     void               leaveAll(Client *user);
 		 Channel      *getChannel(std::string name);
-		 void       join(int fd, std::string data, Client *user);
+		 void      join(int fd, std::string data, Client *user);
 		 void 	   invite(std::string data, Client client);
 		 void      kick(std::string data, Client client);
-		 void       topic(std::string data, Client *client);
+		 void      topic(std::string data, Client *client);
 		 void      CommandHandler(int fd, std::string &data, Client *client);
 		
 };
+
 int	client_message(Client &t_client, std::vector<Client> &clients);
-
-
-
+int	client_acess();
 #endif

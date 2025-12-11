@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 20:16:06 by amandour          #+#    #+#             */
-/*   Updated: 2025/12/10 15:39:01 by amandour         ###   ########.fr       */
+/*   Updated: 2025/12/11 14:36:26 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,4 +136,9 @@ bool Client::getHasNick() const
 std::string &Client::getBuffer()
 {
     return _buffer;
+}
+
+void        setBuffer(std::string buffer)
+{
+    _buffer = buffer;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 20:21:07 by amandour          #+#    #+#             */
-/*   Updated: 2025/12/01 20:49:56 by amandour         ###   ########.fr       */
+/*   Updated: 2025/12/11 14:35:29 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,6 @@ class Client
         void        setHaspass(bool hasPass);
         void        setIsRegistred(bool isregistred);
         void        setHasUser(bool hasuser);
+        void        setBuffer(std::string Buffer);
         void        setHasNick(bool hasnick);
 }; 

@@ -3,17 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD:server/Server.cpp
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:31:53 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/11 12:15:34 by marvin           ###   ########.fr       */
-=======
-/*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/01 12:31:53 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/10 19:19:47 by amandour         ###   ########.fr       */
->>>>>>> cmds:src/Server.cpp
+/*   Updated: 2025/12/11 14:45:03 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +17,11 @@ Server::Server()
 {
 	
 }
-Server::Server(int port, int password)
+Server::Server(int port, char *password)
 {
+	std::string	my_pass(password);
 	this->port = port;
-	this->password = password;
+	this->password = my_pass;
 }
 Server::Server(Server &copy)
 {
@@ -117,7 +111,7 @@ int		Server::return_events(sockaddr_in client_address)
 		}
 		if (fds[i].fd != this->ser && (fds[i].revents & POLLIN))
 		{
-			if (client_message(this->clients[i - 1], this->clients) < 0)
+			if (client_message(this->clients[i - 1], this->clients, password) < 0)
 			{
 				std::cout << "Client disconnected: " << fds[i].fd << std::endl;
 				this->erase_client(i);
@@ -134,7 +128,6 @@ int		Server::return_events(sockaddr_in client_address)
 	return (0);
 }
 
-//asmae
 void  Server::send_msg(std::string data, int fd)
 {
     send(fd, data.c_str(), data.size(), 0);
