@@ -1,18 +1,14 @@
-<<<<<<< HEAD
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:31:53 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/11 14:45:03 by marvin           ###   ########.fr       */
+/*   Updated: 2025/12/16 11:46:17 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-=======
-
->>>>>>> channel funcs
 
 #include "../headers/Server.hpp"
 #include "../headers/Channel.hpp"
@@ -115,7 +111,7 @@ int		Server::return_events(sockaddr_in client_address)
 		}
 		if (fds[i].fd != this->ser && (fds[i].revents & POLLIN))
 		{
-			if (client_message(this->clients[i - 1], this->clients, password) < 0)
+			if (client_message(this->clients[i - 1], this->clients) < 0)
 			{
 				std::cout << "Client disconnected: " << fds[i].fd << std::endl;
 				this->erase_client(i);
