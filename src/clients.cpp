@@ -3,47 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   clients.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:30:07 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/11 15:01:46 by marvin           ###   ########.fr       */
+/*   Updated: 2025/12/18 14:57:07 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/Server.hpp"
 
-int	command_wrong(std::string buffer, std::string s)
+int	client_acess(Client &t_client)
 {
-	if (s.compare(buffer) != 0)
-		return (NULL)
-	buffer.erase(0, s.length());
-	return (buffer);
-}
-
-int	client_acess(Client &t_client, std::string password)
-{
+	std::string	my_buffer;
+	std::string	cmd;
 	if (!t_client.getHaspass())
 	{
-		std::string pass = command_wrong(t_client.getBuffer(), "PASS")
-		if (pass == NULL || pass != password)
+		cmd = "PASS";
+		my_buffer = t_client.getBuffer();
+		if (cmd.compare(my_buffer) != 0)
 			return (-1);
+		my_buffer.erase(0, cmd.length());
+		std::cout << my_buffer << std::endl;
+	}
+	else if (!t_client.getHasNick())
+	{
+		cmd = "NICK";
+		my_buffer = t_client.getBuffer();
+		if (cmd.compare(my_buffer) != 0)
+			return (-1);
+		my_buffer.erase(0, cmd.length());
+		std::cout << my_buffer << std::endl;
+	}
+	else if (!t_client.getHasUser())
+	{
+		cmd = "USER";
+		my_buffer = t_client.getBuffer();
+		if (cmd.compare(my_buffer) != 0)
+			return (-1);
+		my_buffer.erase(0, cmd.length());
+		std::cout << my_buffer << std::endl;
 	}
 	return (1);
 }
 
-
-// int	client_nick(Client &t_client, std::string password)
-// {
-// 	if (!t_client.getHaspass())
-// 	{
-// 		std::string pass = command_wrong(t_client.getBuffer(), "PASS")
-// 		if (pass == NULL || pass != password)
-// 			return (-1);
-// 	}
-// 	return (1);
-// }
-
-int	client_message(Client &t_client, std::vector<Client> &clients, std::string password)
+int	client_message(Client &t_client, std::vector<Client> &clients)
 {
 	char buffer[1024];
 	int		bytes = 1;
@@ -59,11 +62,11 @@ int	client_message(Client &t_client, std::vector<Client> &clients, std::string p
 			return (1);
 		data.append(buffer, bytes);
 		if (!std::isprint(data.back()))
-		bytes = 0;
+			bytes = 0;
     }
 	std::cout << "Received: " << data << std::endl;
 	t_client.setBuffer(data);
-	if (client_acess(t_client, password) == -1)
+	if (client_acess(t_client) == -1)
 		return (1);
 	// CommandHandler(int fd, std::string &data, Client *client);
     return 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:09:01 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/11 14:20:41 by marvin           ###   ########.fr       */
+/*   Updated: 2025/12/18 12:46:23 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	main(int arc, char **arv)
 		return (std::cerr << "listen function faild" << std::endl, 1);
 	}
 	fds.fd = socket_fd;
-	fds.events = POLLIN;//connection
+	fds.events = POLLIN;
 	myServer.setfds(fds);
 	std::cout << "---------Server Started---------" << std::endl;
 	std::signal(SIGINT, handler_signal);

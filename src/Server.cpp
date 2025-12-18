@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:31:53 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/16 11:46:17 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/16 11:54:50 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ int		Server::new_client(sockaddr_in client_address, int i)
 	newfds.events = POLLIN;
 	this->setfds(newfds);
 	new_client.setFd(fd);
-	new_client.setNickname("User" + std::to_string(fd));
 	this->setClient(new_client);
 	std::cout << "New client connected: " << fd << std::endl;
 	return (0);

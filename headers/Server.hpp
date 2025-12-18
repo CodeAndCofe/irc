@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:07:32 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/16 11:45:31 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/16 12:05:53 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ class	Server
 		Channel  *getChannel(std::string channel);
 		 static void        send_msg(std::string data, int fd);
 		 static std::vector<std::string>  split(const std::string &str, char delimiter);
-	     void               leaveAll(Client *user);
-		 Channel      *getChannel(std::string name);
+	     void      leaveAll(Client *user);
+		 Channel   *getChannel(std::string name);
 		 void      join(int fd, std::string data, Client *user);
 		 void 	   invite(std::string data, Client client);
 		 void      kick(std::string data, Client client);
