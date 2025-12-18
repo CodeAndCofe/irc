@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 20:16:06 by amandour          #+#    #+#             */
-/*   Updated: 2025/12/11 14:36:26 by marvin           ###   ########.fr       */
+/*   Updated: 2025/12/18 17:07:11 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ std::string &Client::getBuffer()
     return _buffer;
 }
 
-void        setBuffer(std::string buffer)
+void        Client::setBuffer(std::string buffer)
 {
     _buffer = buffer;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 21:18:32 by amandour          #+#    #+#             */
-/*   Updated: 2025/12/11 15:06:49 by amandour         ###   ########.fr       */
+/*   Updated: 2025/12/18 21:42:40 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,11 @@ bool Channel::isAdmine(Client client)
 
 void Channel::inviteClient(Client client)
 {
+	std::string	mssg;
 	invited.push_back(client);
+
+	mssg = "You have been joined channel " + this->getName() + "\n";
+	send(client.getFd(), mssg.c_str(), mssg.length(), MSG_DONTWAIT);
 }
 
 void Channel::kickMember(Client client)

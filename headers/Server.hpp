@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:07:32 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/16 12:05:53 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/18 17:44:44 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,18 @@ class	Server
 		//asmae
 		Client   *getClient(std::string client);
 		Channel  *getChannel(std::string channel);
-		 static void        send_msg(std::string data, int fd);
-		 static std::vector<std::string>  split(const std::string &str, char delimiter);
-	     void      leaveAll(Client *user);
-		 Channel   *getChannel(std::string name);
-		 void      join(int fd, std::string data, Client *user);
-		 void 	   invite(std::string data, Client client);
-		 void      kick(std::string data, Client client);
-		 void      topic(std::string data, Client *client);
-		 void      CommandHandler(int fd, std::string &data, Client *client);
-		
+		static void        send_msg(std::string data, int fd);
+		static std::vector<std::string>  split(const std::string &str, char delimiter);
+	    void      leaveAll(Client *user);
+		void      join(int fd, std::string data, Client *user);
+		void 	   invite(std::string data, Client client);
+		void      kick(std::string data, Client client);
+		void      topic(std::string data, Client *client);
+		void      CommandHandler(int fd, std::string &data, Client *client);
+		int		client_message(Client &t_client, std::vector<Client> &clients);
+		int		client_acess(Client &t_client);
+		int		isNickNameExist(std::string mybuffer);
 };
 
-int	client_message(Client &t_client, std::vector<Client> &clients);
-int	client_acess();
+
 #endif

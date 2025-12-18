@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:31:53 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/16 11:54:50 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/18 18:34:29 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ Client *Server::getClient(std::string client)
 {
 	for (size_t i = 0; i < clients.size(); i++)
 	{
+		std::cout << clients[i].getNickname() + ":" << std::endl;
 		if (client == clients[i].getNickname())
 			return &clients[i];
 	}
@@ -173,8 +174,8 @@ void Server::CommandHandler(int fd, std::string &data, Client *client)
 		topic(data, client);
     else if (!std::strncmp(data.c_str(), "INVITE ", 7))
         invite(data, *client);
-	  else if (!std::strncmp(data.c_str(), "NICK ", 5))
-		topic(data, client);
+	  else if (!std::strncmp(data.c_str(), "KICK ", 5))
+		kick(data, *client);
     else
         Server::send_msg(ERR_INVALIDCOMMAND(client->getNickname(), data), client->getFd());
 }
