@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:30:07 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/18 21:18:22 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/19 20:56:54 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	Server::client_acess(Client &t_client)
 	{
 		cmd = "PASS";
 		my_buffer = t_client.getBuffer();
-		if (!std::strncmp(my_buffer.c_str(), "PASS", 5))
+		if (!std::strncmp(my_buffer.c_str(), "PASS", 4))
 			return (-1);
 		my_buffer.erase(0, cmd.length() + 1);
 		if (std::strncmp(my_buffer.c_str(), this->password.c_str(), this->password.length()) == 0)
@@ -45,7 +45,7 @@ int	Server::client_acess(Client &t_client)
 	{
 		cmd = "NICK";
 		my_buffer = t_client.getBuffer();
-		if (!std::strncmp(my_buffer.c_str(), "NICK", 5))
+		if (std::strncmp(my_buffer.c_str(), "NICK", 4) != 0)
 			return (-1);
 		my_buffer.erase(0, cmd.length() + 1);
 		my_buffer = my_buffer.erase(my_buffer.length() - 1, my_buffer.length());
@@ -60,7 +60,7 @@ int	Server::client_acess(Client &t_client)
 	{
 		cmd = "USER";
 		my_buffer = t_client.getBuffer();
-		if (!std::strncmp(my_buffer.c_str(), "USER", 5))
+		if (std::strncmp(my_buffer.c_str(), "USER", 4) != 0)
 			return (-1);
 		my_buffer.erase(0, cmd.length() + 1);
 		t_client.setUsername(my_buffer.erase(my_buffer.length() - 1, my_buffer.length()));

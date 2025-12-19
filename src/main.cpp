@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 20:50:23 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/18 20:50:30 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/19 20:53:53 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	main(int arc, char **arv)
 		close(socket_fd);
 		return (std::cerr << "bind function faild" << std::endl, 1);
 	}
-	
 	if (listen(socket_fd, 500) < 0)
 	{
 		close(socket_fd);

@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:31:53 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/18 18:34:29 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/19 20:55:05 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,9 +147,11 @@ Channel *Server::getChannel(std::string name)
 {
 	for (size_t i = 0; i < _channels.size(); i++)
 	{
+		std::cout << "*" << _channels[i].getName() << "*" << std::endl;
 		if (name == _channels[i].getName())
 			return &_channels[i];
 	}
+	std::cout << "err" << std::endl;
 	return NULL;
 }
 
@@ -168,14 +170,16 @@ void Server::CommandHandler(int fd, std::string &data, Client *client)
 {
 	while (!data.empty() && (data.back() == '\r' || data.back() == '\n'))
         data.pop_back();
-     if (!std::strncmp(data.c_str(), "JOIN ", 5))
+     if (!std::strncmp(data.c_str(), "JOIN", 4))
         join(fd, data, client);
-	  else if (!std::strncmp(data.c_str(), "TOPIC ", 6))
+	  else if (!std::strncmp(data.c_str(), "TOPIC", 5))
 		topic(data, client);
-    else if (!std::strncmp(data.c_str(), "INVITE ", 7))
+    else if (!std::strncmp(data.c_str(), "INVITE", 6))
         invite(data, *client);
-	  else if (!std::strncmp(data.c_str(), "KICK ", 5))
+	  else if (!std::strncmp(data.c_str(), "KICK", 4))
 		kick(data, *client);
+	 else if (!std::strncmp(data.c_str(), "PRIVMSG", 7))
+        privmsg(data, *client);
     else
         Server::send_msg(ERR_INVALIDCOMMAND(client->getNickname(), data), client->getFd());
 }

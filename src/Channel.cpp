@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 21:18:32 by amandour          #+#    #+#             */
-/*   Updated: 2025/12/18 21:42:40 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/19 20:43:40 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void Channel::inviteClient(Client client)
 {
 	std::string	mssg;
 	invited.push_back(client);
-
+	this->addNewMember(client);
 	mssg = "You have been joined channel " + this->getName() + "\n";
 	send(client.getFd(), mssg.c_str(), mssg.length(), MSG_DONTWAIT);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:07:32 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/18 17:44:44 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/18 22:29:42 by amandour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ class	Server
 		int		client_message(Client &t_client, std::vector<Client> &clients);
 		int		client_acess(Client &t_client);
 		int		isNickNameExist(std::string mybuffer);
+		void     privmsg(std::string data, Client user);
 };
 
 
