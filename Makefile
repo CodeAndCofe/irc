@@ -1,5 +1,5 @@
 CPP= c++
-FLAGS= -Wall -Werror -Wextra
+FLAGS= -Wall -Werror -Wextra -fsanitize=address -g3
 SRC= src/Server.cpp src/main.cpp src/clients.cpp src/Client.cpp src/join.cpp src/Channel.cpp src/kick.cpp src/topic.cpp src/invite.cpp
 OBJ= $(SRC:.cpp=.o)
 HEADERS= headers/Server.hpp headers/Client.hpp headers/Channel.hpp headers/RepErr.hpp 
