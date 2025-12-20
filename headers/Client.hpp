@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 20:21:07 by amandour          #+#    #+#             */
-/*   Updated: 2025/12/18 17:07:04 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/20 21:51:51 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 class Client
 {
     private:
+		bool			regestred;
         int        		_fd;
         std::string		_ipadd;
         std::string		_nickname;
@@ -44,6 +45,7 @@ class Client
         bool           getIsRegistred() const;
         bool           getHasUser() const;
         bool           getHasNick() const;
+		bool			getRegestred();
         std::string    &getBuffer();
 
         //****** setters 
@@ -57,4 +59,5 @@ class Client
         void        setHasUser(bool hasuser);
         void        setBuffer(std::string buffer);
         void        setHasNick(bool hasnick);
+		void		setRegesterd(bool val);
 }; 

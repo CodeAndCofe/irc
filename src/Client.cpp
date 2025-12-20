@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 20:16:06 by amandour          #+#    #+#             */
-/*   Updated: 2025/12/18 17:07:11 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/20 21:53:33 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ Client::Client()
     _hasPass = false;
     _isRegistred = false;
     _hasUser = false;
-    _hasNick = false;  
+    _hasNick = false;
+	regestred = false; 
 }
 
 Client::~Client()
@@ -141,4 +142,14 @@ std::string &Client::getBuffer()
 void        Client::setBuffer(std::string buffer)
 {
     _buffer = buffer;
+}
+
+void		Client::setRegesterd(bool val)
+{
+	regestred = val;
+}
+
+bool		Client::getRegestred()
+{
+	return (this->regestred);
 }

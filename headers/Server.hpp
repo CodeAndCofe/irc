@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:07:32 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/18 22:29:42 by amandour         ###   ########.fr       */
+/*   Updated: 2025/12/20 22:06:34 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,20 @@ class	Server
 		Server &operator=(Server &copy);
 		~Server(); 
 		//asmae
+		int		user_name_regester(Client &t_client, std::string cmd);
 		Client   *getClient(std::string client);
 		Channel  *getChannel(std::string channel);
+		int	password_client(Client &t_client, std::string cmd);
 		static void        send_msg(std::string data, int fd);
-		static std::vector<std::string>  split(const std::string &str, char delimiter);
-	    void      leaveAll(Client *user);
-		void      join(int fd, std::string data, Client *user);
+		int			nick_name_regester(Client &t_client, std::string cmd);
+		static 		std::vector<std::string>  split(const std::string &str, char delimiter);
+	    void     	 leaveAll(Client *user);
+		void     	 join(int fd, std::string data, Client *user);
 		void 	   invite(std::string data, Client client);
 		void      kick(std::string data, Client client);
 		void      topic(std::string data, Client *client);
 		void      CommandHandler(int fd, std::string &data, Client *client);
-		int		client_message(Client &t_client, std::vector<Client> &clients);
+		int		client_message(Client &t_client);
 		int		client_acess(Client &t_client);
 		int		isNickNameExist(std::string mybuffer);
 		void     privmsg(std::string data, Client user);
