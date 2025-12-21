@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:31:53 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/20 22:08:47 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/21 16:09:06 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,6 @@ Channel *Server::getChannel(std::string name)
 		if (name == _channels[i].getName())
 			return &_channels[i];
 	}
-	std::cout << "err" << std::endl;
 	return NULL;
 }
 

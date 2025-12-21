@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:30:07 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/20 22:44:45 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/21 16:06:57 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	Server::password_client(Client &t_client, std::string cmd)
 			return (1);
 		}
 	}
-	std::cout << "password has been not regestred" << std::endl;
 	return (1);
 }
 
@@ -61,7 +60,6 @@ int	Server::nick_name_regester(Client &t_client, std::string cmd)
 		std::cout << "NICK has regestred" << ":" << nick[1] << std::endl;
 		return (1);
 	}
-	std::cout << "NICK has been not regestred"  << std::endl;
 	return (1);
 }
 
@@ -79,7 +77,6 @@ int	Server::user_name_regester(Client &t_client, std::string cmd)
 		std::cout << "USER has regestred" << ":" <<user[1] << std::endl;
 		return (0);
 	}
-	std::cout << "USER has been not regestred" << ":" << std::endl;
 	return (1);
 }
 
