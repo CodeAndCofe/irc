@@ -6,11 +6,22 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:30:07 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/25 16:40:02 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/25 18:09:27 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/Server.hpp"
+
+void	is_regester(Client &t_client)
+{
+	if (t_client.getHaspass() == true
+		&& t_client.getHasNick() == true
+		&& t_client.getHasUser() == true)
+	{
+		t_client.setRegesterd(true);
+		std::cout << " fine" << std::endl;
+	}
+}
 
 int	Server::isNickNameExist(std::string mybuffer)
 {
@@ -38,6 +49,7 @@ int	Server::password_client(Client &t_client, std::string cmd)
 		{
 			std::cout << "password has regestred" << std::endl;
 			t_client.setHaspass(true);
+			is_regester(t_client);
 			return (1);
 		}
 	}
@@ -57,7 +69,8 @@ int	Server::nick_name_regester(Client &t_client, std::string cmd)
 			return (Server::send_msg(ERR_NICKINUSE(nick[1]), t_client.getFd()), 1);
 		t_client.setNickname(nick[1]);
 		t_client.setHasNick(true);
-		std::cout << "NICK has regestred" << ":" << nick[1] << std::endl;
+		std::cout << "nick fine" << std::endl;
+		is_regester(t_client);
 		return (1);
 	}
 	return (1);
@@ -74,11 +87,13 @@ int	Server::user_name_regester(Client &t_client, std::string cmd)
 			return (1);
 		t_client.setUsername(user[1]);
 		t_client.setHasUser(true);
-		std::cout << "USER has regestred" << ":" <<user[1] << std::endl;
+		std::cout << "USER fine" << std::endl;
+		is_regester(t_client);
 		return (0);
 	}
 	return (1);
 }
+
 
 
 int	Server::client_acess(Client &t_client)
@@ -87,20 +102,12 @@ int	Server::client_acess(Client &t_client)
 		&& !std::strncmp(t_client.getBuffer().c_str(), "NICK", 4)
 		&& !std::strncmp(t_client.getBuffer().c_str(), "USER", 4))
 			return (send_msg(ERR_NOTREGISTERED, t_client.getFd()), 1);
-	std::cout << t_client.getBuffer() << std::endl;
 	if (this->password_client(t_client, "PASS") == 1)
 		return (-1);
 	if (this->nick_name_regester(t_client, "NICK") == 1)
 		return (-1);
 	if (this->user_name_regester(t_client, "USER") == 1)
 		return (-1);
-	if (t_client.getHaspass() == true
-		&& t_client.getHasNick() == true
-		&& t_client.getHasUser() == true)
-	{
-		t_client.setRegesterd(true);
-		std::cout << "regestred fine" << std::endl;
-	}
 	return (1);
 }
 
@@ -120,8 +127,10 @@ int	Server::client_message(Client &t_client)
 		if (!std::isprint(data.back()))
 			bytes = 0;
     }
-	data.erase(data.size(), -1);
 	t_client.setBuffer(data);
+	std::cout << "********** COOMMAND*************" << std::endl;
+	std::cout << data << std::endl;
+	std::cout << "*********************************" << std::endl;
 	if (t_client.getRegestred() == false)
 		if (client_acess(t_client) == -1)
 			return (1);

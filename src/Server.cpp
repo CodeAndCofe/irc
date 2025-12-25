@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:31:53 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/25 16:29:24 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/25 18:05:02 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ int		Server::new_client(sockaddr_in client_address, int i)
 	this->setfds(newfds);
 	new_client.setFd(fd);
 	this->setClient(new_client);
-	std::cout << "New client connected: " << fd << std::endl;
 	return (0);
 }
 
