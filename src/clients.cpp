@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:30:07 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/21 16:06:57 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/25 16:40:02 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	Server::isNickNameExist(std::string mybuffer)
 int	Server::password_client(Client &t_client, std::string cmd)
 {
 	std::vector<std::string> pass = Server::split(t_client.getBuffer(), ' ');
-	if (pass[0] != cmd)
-		return (0);
+	if (pass.empty() || pass[0] != cmd)
+		return 0;
 	if (t_client.getHaspass() == false)
 	{
 		if (pass.size() < 2)
@@ -47,7 +47,7 @@ int	Server::password_client(Client &t_client, std::string cmd)
 int	Server::nick_name_regester(Client &t_client, std::string cmd)
 {
 	std::vector<std::string> nick = Server::split(t_client.getBuffer(), ' ');
-	if (nick[0] != cmd)
+	if (nick.empty() || nick[0] != cmd)
 		return (0);
 	if (t_client.getHasNick() == false)
 	{
@@ -66,7 +66,7 @@ int	Server::nick_name_regester(Client &t_client, std::string cmd)
 int	Server::user_name_regester(Client &t_client, std::string cmd)
 {
 	std::vector <std::string> user = Server::split(t_client.getBuffer(), ' ');
-	if (user[0] != cmd)
+	if (user.empty() || user[0] != cmd)
 		return (0);
 	if (t_client.getHasUser() == false)
 	{
