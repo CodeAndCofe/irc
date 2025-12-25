@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   topic.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 18:38:05 by amandour          #+#    #+#             */
-/*   Updated: 2025/12/10 18:44:19 by amandour         ###   ########.fr       */
+/*   Updated: 2025/12/25 12:34:42 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/Channel.hpp"
 #include "../headers/Server.hpp"
-
-
 
 void Server::topic(std::string data, Client *client)
 {

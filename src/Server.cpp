@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:31:53 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/21 16:09:06 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/25 13:25:40 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@ Server::Server()
 {
 	
 }
+
 Server::Server(int port, char *password)
 {
 	std::string	my_pass(password);
 	this->port = port;
 	this->password = my_pass;
 }
+
 Server::Server(Server &copy)
 {
 	this->port = copy.port;
@@ -128,7 +130,7 @@ int		Server::return_events(sockaddr_in client_address)
 
 void  Server::send_msg(std::string data, int fd)
 {
-    send(fd, data.c_str(), data.size(), 0);
+    send(fd, data.c_str(), data.size(), MSG_DONTWAIT);
 }
 
 std::vector<std::string> Server::split(const std::string &str, char delimiter)

@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:07:32 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/20 22:06:34 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/25 13:19:54 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #include <csignal>
 #include <vector>
 #include <cctype>
+#include <fcntl.h>
 #include "Client.hpp"
 #include "RepErr.hpp"
 #include "Channel.hpp"
