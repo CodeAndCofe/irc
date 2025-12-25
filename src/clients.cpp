@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clients.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:30:07 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/25 16:40:02 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/25 17:44:25 by amandour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	Server::password_client(Client &t_client, std::string cmd)
 	{
 		if (pass.size() < 2)
 		{
-			Server::send_msg(ERR_MISSINGPARAMS(pass[0]), t_client.getFd());
+			Server::send_msg(ERR_NEEDMOREPARAMS (pass[0]), t_client.getFd());
 			return (1);
 		}
 		if (std::strncmp(pass[1].c_str(), this->password.c_str(), this->password.length()) == 0)
@@ -54,7 +54,7 @@ int	Server::nick_name_regester(Client &t_client, std::string cmd)
 		if (nick.size() < 2)
 			return (1);
 		if (isNickNameExist(nick[1]) == 1)
-			return (Server::send_msg(ERR_NICKINUSE(nick[1]), t_client.getFd()), 1);
+			return (Server::send_msg(ERR_NICKNAMEINUSE(nick[1]), t_client.getFd()), 1);
 		t_client.setNickname(nick[1]);
 		t_client.setHasNick(true);
 		std::cout << "NICK has regestred" << ":" << nick[1] << std::endl;

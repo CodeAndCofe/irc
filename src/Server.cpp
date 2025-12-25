@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:31:53 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/25 16:29:24 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/25 17:40:03 by amandour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,5 +181,5 @@ void Server::CommandHandler(int fd, std::string &data, Client *client)
 	 else if (!std::strncmp(data.c_str(), "PRIVMSG", 7))
         privmsg(data, *client);
     else
-        Server::send_msg(ERR_INVALIDCOMMAND(client->getNickname(), data), client->getFd());
+        Server::send_msg(ERR_UNKNOWNCOMMAND(client->getNickname(), data), client->getFd());
 }
