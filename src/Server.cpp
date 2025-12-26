@@ -6,13 +6,12 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:31:53 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/25 18:05:02 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/26 17:03:22 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/Server.hpp"
 #include "../headers/Channel.hpp"
-
 Server::Server()
 {
 	
@@ -77,13 +76,14 @@ int		Server::new_client(sockaddr_in client_address, int i)
 	if (fd < 0)
 	{
 		perror("accept failed");
-		std::cout << "Error: " << this->fds[i].fd << std::endl;
+		std::cerr << "Error: " << this->fds[i].fd << std::endl;
 		return (1);
 	}
 	newfds.fd = fd;
 	newfds.events = POLLIN;
 	this->setfds(newfds);
 	new_client.setFd(fd);
+	new_client.create_ip(client_address);
 	this->setClient(new_client);
 	return (0);
 }
@@ -113,6 +113,7 @@ int		Server::return_events(sockaddr_in client_address)
 		{
 			if (client_message(this->clients[i - 1]) < 0)
 			{
+				std::cout << "Client disconnected: " << fds[i].fd << std::endl;
 				this->erase_client(i);
                 i--;
 			}
@@ -147,7 +148,6 @@ Channel *Server::getChannel(std::string name)
 {
 	for (size_t i = 0; i < _channels.size(); i++)
 	{
-		std::cout << "*" << _channels[i].getName() << "*" << std::endl;
 		if (name == _channels[i].getName())
 			return &_channels[i];
 	}
@@ -159,8 +159,8 @@ Client *Server::getClient(std::string client)
 {
 	for (size_t i = 0; i < clients.size(); i++)
 	{
-		std::cout << clients[i].getNickname() + ":" << std::endl;
-		if (client == clients[i].getNickname())
+		std::cout << clients[i].getNickname() << std::endl;
+		if (std::strncmp(client.c_str(), clients[i].getNickname().c_str(), client.length()) == 0)
 			return &clients[i];
 	}
 	return NULL;
@@ -180,5 +180,5 @@ void Server::CommandHandler(int fd, std::string &data, Client *client)
 	 else if (!std::strncmp(data.c_str(), "PRIVMSG", 7))
         privmsg(data, *client);
     else
-        Server::send_msg(ERR_INVALIDCOMMAND(client->getNickname(), data), client->getFd());
+    	Server::send_msg(ERR_UNKNOWNCOMMAND(client->getNickname(), data), client->getFd());
 }

@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   privmsg.cpp                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/18 22:24:45 by amandour          #+#    #+#             */
-/*   Updated: 2025/12/19 20:39:06 by aferryat         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 
 #include "../headers/Channel.hpp"
 #include "../headers/Client.hpp"
@@ -20,7 +8,7 @@ void send_channel(std::string receiver, std::string msg, Client sender, Channel 
 {
 	if (!channel)
 	{
-		Server::send_msg(ERR_CHANNELNOTFOUND(receiver), sender.getFd());
+		Server::send_msg(ERR_NOSUCHCHANNEL(receiver), sender.getFd());
 		return;
 	}
 	if (!channel->memberExist(sender))
@@ -53,7 +41,7 @@ void Server::privmsg(std::string data, Client user)
 	
 	if (command.size() < 3)
 	{  
-		Server::send_msg((ERR_MISSINGPARAMS(data)), user.getFd());
+		Server::send_msg((ERR_NEEDMOREPARAMS(data)), user.getFd());
 		return ;
 	}
 	
@@ -65,7 +53,7 @@ void Server::privmsg(std::string data, Client user)
 
 	if (msg.empty())
 	{
-		Server::send_msg((ERR_NOMESSAGE()), user.getFd());
+		Server::send_msg((ERR_NOTEXTTOSEND()), user.getFd());
 		return ;
 	}
 

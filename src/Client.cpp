@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 20:16:06 by amandour          #+#    #+#             */
-/*   Updated: 2025/12/25 16:41:19 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/26 17:19:27 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,32 @@ Client &Client::operator=(const Client &src)
 {
     if (this != &src)
     {
-        _fd = src._fd;
-        _ipadd = src._ipadd;
-        _username = src._username;
-        _nickname = src._nickname;
+    this->_fd = src._fd;
+    this->_ipadd = src._ipadd;
+    this->_username = src._username;
+    this->_nickname = src._nickname;
+    this->_hasPass = src._hasPass;
+    this->_isRegistred = src._isRegistred;
+    this->_hasUser = src._hasUser;
+    this->_hasNick = src._hasNick;
+	this->regestred = src.regestred; 
+    this->client_ip_address = src.client_ip_address;
     }
     return *this;
 }
 
 Client::Client(const Client &src)
 {
-    *this = src;
+    this->_fd = src._fd;
+    this->_ipadd = src._ipadd;
+    this->_username = src._username;
+    this->_nickname = src._nickname;
+    this->_hasPass = src._hasPass;
+    this->_isRegistred = src._isRegistred;
+    this->_hasUser = src._hasUser;
+    this->_hasNick = src._hasNick;
+	this->regestred = src.regestred;
+    this->client_ip_address = src.client_ip_address;
 }
 
 int            Client::getFd() const
@@ -152,4 +167,22 @@ void		Client::setRegesterd(bool val)
 bool		Client::getRegestred()
 {
 	return (this->regestred);
+}
+
+void    Client::create_ip(sockaddr_in &client_address)
+{
+    char    ip[INET_ADDRSTRLEN];
+
+    inet_ntop (AF_INET, &client_address.sin_addr, ip, sizeof (ip));
+    std::string  val(ip);
+    this->client_ip_address = val;
+    this->_ipadd = val;
+}
+
+std::string    Client::getClientIp()
+{
+    std::cout << "--------Ip---------" << std::endl;
+    std::cout << this->client_ip_address << std::endl;
+    std::cout << "-------------------" << std::endl;
+    return (this->client_ip_address);
 }

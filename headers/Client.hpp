@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 20:21:07 by amandour          #+#    #+#             */
-/*   Updated: 2025/12/20 21:51:51 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/26 15:58:34 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 #include <iostream>
 #include <string>
-
+#include <arpa/inet.h>
 class Client
 {
     private:
+        std::string     client_ip_address;
 		bool			regestred;
         int        		_fd;
         std::string		_ipadd;
@@ -35,7 +36,12 @@ class Client
         Client(const Client &src);
         Client &operator=(const Client &src);
         ~Client();
-		
+
+        // ip_client for prefix
+
+        void    create_ip(sockaddr_in &client_address);
+
+
         //****** getters
         int            getFd() const;
         std::string    getIpadd() const;
@@ -47,9 +53,9 @@ class Client
         bool           getHasNick() const;
 		bool			getRegestred();
         std::string    &getBuffer();
+        std::string    getClientIp();
 
         //****** setters 
-
         void        setFd(int fd);
         void        setIpadd(std::string ipadd);
         void        setUsername(std::string username);

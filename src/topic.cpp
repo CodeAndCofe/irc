@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   topic.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 18:38:05 by amandour          #+#    #+#             */
-/*   Updated: 2025/12/25 12:34:42 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/25 18:02:10 by amandour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void Server::topic(std::string data, Client *client)
 	std::vector<std::string> topic = Server::split(data, ' ');
 	if (topic.size() < 2)
 	{
-		Server::send_msg((ERR_MISSINGPARAMS(data)), client->getFd());
+		Server::send_msg((ERR_NEEDMOREPARAMS(data)), client->getFd());
 		return ;
 	}
 	if (topic[1][0] != '#')
@@ -29,7 +29,7 @@ void Server::topic(std::string data, Client *client)
 	Channel *room = getChannel(topic[1]);
 	if (!room)
 	{
-		Server::send_msg(ERR_CHANNELNOTFOUND(topic[1]), client->getFd());
+		Server::send_msg(ERR_NOSUCHCHANNEL(topic[1]), client->getFd());
 		return;
 	}
 
@@ -43,7 +43,7 @@ void Server::topic(std::string data, Client *client)
 		if (room->getTopic().empty())
 			Server::send_msg(RPL_NOTOPIC(client->getNickname(), topic[1]), client->getFd());
 		else
-			Server::send_msg(RPL_CHTOPIC(client->getNickname(), topic[1], room->getTopic()), client->getFd());
+			Server::send_msg(RPL_TOPIC(client->getNickname(), topic[1], room->getTopic()), client->getFd());
 	}
 	else if (topic[2][0] == ':')
 	{
@@ -52,13 +52,13 @@ void Server::topic(std::string data, Client *client)
 		else if (!room->getTopicMode() || (room->getTopicMode() && room->isAdmine(*client)))
 			room->setTopic(data.substr(data.find(':') + 1));
 		else
-			Server::send_msg(ERR_NOTCHANOP(client->getNickname()), client->getFd());
+			Server::send_msg(ERR_CHANOPRIVSNEEDED(client->getNickname()), client->getFd());
 	}
 	else
 	{
 		if (!room->getTopicMode() || (room->getTopicMode() && room->isAdmine(*client)))
 			room->setTopic(topic[2]);
 		else
-			Server::send_msg(ERR_NOTCHANOP(client->getNickname()), client->getFd());
+			Server::send_msg(ERR_CHANOPRIVSNEEDED(client->getNickname()), client->getFd());
 	}
 }

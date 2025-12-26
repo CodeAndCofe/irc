@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 21:18:32 by amandour          #+#    #+#             */
-/*   Updated: 2025/12/19 20:43:40 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/25 17:58:43 by amandour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ void Channel::sendKickingMsg(Client sender, Channel channel, Client target, std:
 		if (target.getFd() != members[i].getFd())
 			Server::send_msg(RPL_KICKMSG(sender.getNickname() + "!~" + sender.getUserName() + "@" + sender.getIpadd(), channel.getName(), target.getNickname(), comment), members[i].getFd());
     }
-	Server::send_msg(RPL_KICKNOCOMMENT(sender.getNickname() + "!~" + sender.getUserName() + "@" + sender.getIpadd(), channel.getName(), target.getNickname()), target.getFd());
+	Server::send_msg(RPL_KICKDEFMSG(sender.getNickname() + "!~" + sender.getUserName() + "@" + sender.getIpadd(), channel.getName(), target.getNickname()), target.getFd());
 }
 
 bool   Channel::getTopicMode()

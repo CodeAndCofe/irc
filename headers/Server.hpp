@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:07:32 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/25 13:19:54 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/26 15:54:22 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 #include "Client.hpp"
 #include "RepErr.hpp"
 #include "Channel.hpp"
+
 
 class	Server
 {
@@ -71,5 +72,6 @@ class	Server
 		void     privmsg(std::string data, Client user);
 };
 
+bool    clean_compare(std::string a, std::string b, size_t l);
 
 #endif

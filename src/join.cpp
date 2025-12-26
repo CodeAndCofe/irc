@@ -6,7 +6,7 @@
 /*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 20:15:44 by amandour          #+#    #+#             */
-/*   Updated: 2025/12/10 14:11:32 by amandour         ###   ########.fr       */
+/*   Updated: 2025/12/25 17:58:15 by amandour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void verifyKey(std::string pass, Client *user, Channel *channel, int fd)
         if (channel->getTopic().empty())
             Server::send_msg(RPL_NOTOPIC(user->getNickname(), channel->getName()), user->getFd());
         else
-            Server::send_msg(RPL_CHTOPIC(user->getNickname(), channel->getName(), channel->getTopic()), user->getFd());
-        Server::send_msg(RPL_NAMES(user->getNickname(), channel->getName(), channel->nameReply()), user->getFd());
-        Server::send_msg(RPL_NAMESEND(user->getNickname(), channel->getName()), user->getFd());
+            Server::send_msg(RPL_TOPIC(user->getNickname(), channel->getName(), channel->getTopic()), user->getFd());
+        Server::send_msg(RPL_NAMREPLY(user->getNickname(), channel->getName(), channel->nameReply()), user->getFd());
+        Server::send_msg(RPL_ENDOFNAMES(user->getNickname(), channel->getName()), user->getFd());
     }
     else
         Server::send_msg(ERR_BADCHANNELKEY(user->getNickname(), channel->getName()), fd);
@@ -63,7 +63,7 @@ void Server::join(int fd, std::string data, Client *user)
 
     if (command.size() < 2 || command[1].size() < 2)
     {
-        Server::send_msg((ERR_MISSINGPARAMS(data)), user->getFd());
+        Server::send_msg((ERR_NEEDMOREPARAMS(data)), user->getFd());
         return ;
     }
     std::vector<std::string> name = Server::split(command[1], ',');
@@ -90,8 +90,8 @@ void Server::join(int fd, std::string data, Client *user)
             room.addNewMember(*user);
             this->_channels.push_back(room);
             Server::send_msg(RPL_JOIN(user->getNickname(), room.getName()), user->getFd());
-            Server::send_msg(RPL_NAMES(user->getNickname(), room.getName(), room.nameReply()), user->getFd());
-            Server::send_msg(RPL_NAMESEND(user->getNickname(), name[i]), user->getFd());
+            Server::send_msg(RPL_NAMREPLY(user->getNickname(), room.getName(), room.nameReply()), user->getFd());
+            Server::send_msg(RPL_ENDOFNAMES(user->getNickname(), name[i]), user->getFd());
         }
         else
         {

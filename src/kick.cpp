@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   kick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 18:25:13 by amandour          #+#    #+#             */
-/*   Updated: 2025/12/18 18:18:57 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/25 18:00:21 by amandour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void Server::kick(std::string data, Client client)
 	std::vector<std::string> command = Server::split(data, ' ');
     if (command.size() < 3)
 	{  
-		Server::send_msg((ERR_MISSINGPARAMS(data)), client.getFd());
+		Server::send_msg((ERR_NEEDMOREPARAMS(data)), client.getFd());
 		return ;
 	}
     size_t  found = data.find(':');
@@ -34,7 +34,7 @@ void Server::kick(std::string data, Client client)
     Channel *channel = getChannel(command[1]);
     if (!channel)
     {
-        Server::send_msg(ERR_CHANNELNOTFOUND(command[1]), client.getFd());
+        Server::send_msg(ERR_NOSUCHNICK(command[1]), client.getFd());
 		return;
     }
     if (!channel->memberExist(client))
@@ -44,7 +44,7 @@ void Server::kick(std::string data, Client client)
     }
     if (!channel->isAdmine(client))
     {
-        Server::send_msg(ERR_NOTCHANOP(command[1]), client.getFd());
+        Server::send_msg(ERR_CHANOPRIVSNEEDED(command[1]), client.getFd());
 		return ;
     }
     std::vector<std::string> names = Server::split(command[2], ',');
