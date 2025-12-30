@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:31:53 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/30 15:54:55 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/30 17:37:03 by amandour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,17 +167,18 @@ Client *Server::getClient(std::string client)
 }
 void Server::CommandHandler(int fd, std::string &data, Client *client)
 {
+	std::vector<std::string>	command = Server::split(data, ' ');
 	while (!data.empty() && (data.back() == '\r' || data.back() == '\n'))
         data.pop_back();
-     if (!std::strncmp(data.c_str(), "JOIN", 4))
+     if (!std::strncmp(command[0].c_str(), "JOIN", command[0].length()))
         join(fd, data, client);
-	  else if (!std::strncmp(data.c_str(), "TOPIC", 5))
+	  else if (!std::strncmp(command[0].c_str(), "TOPIC", command[0].length()))
 		topic(data, client);
-    else if (!std::strncmp(data.c_str(), "INVITE", 6))
+    else if (!std::strncmp(command[0].c_str(), "INVITE", command[0].length()))
         invite(data, *client);
-	  else if (!std::strncmp(data.c_str(), "KICK", 4))
+	  else if (!std::strncmp(command[0].c_str(), "KICK", command[0].length()))
 		kick(data, *client);
-	 else if (!std::strncmp(data.c_str(), "PRIVMSG", 7))
+	 else if (!std::strncmp(command[0].c_str(), "PRIVMSG", command[0].length()))
         privmsg(data, *client);
     else
     	Server::send_msg(ERR_UNKNOWNCOMMAND(client->getNickname(), data), client->getFd());
