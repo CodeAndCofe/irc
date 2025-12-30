@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:30:07 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/26 17:15:43 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/30 17:02:53 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int	Server::client_acess(Client &t_client)
 
 int	Server::client_message(Client &t_client)
 {
-	char buffer[1024];
+	char	buffer[1024];
 	int		bytes = 1;
 	std::string data;
 
@@ -129,10 +129,10 @@ int	Server::client_message(Client &t_client)
 		if (!std::isprint(data.back()))
 			bytes = 0;
     }
+	data = data.substr(0, data.length() - 2);
 	t_client.setBuffer(data);
-	std::cout << "********** COOMMAND*************" << std::endl;
-	std::cout << t_client.getNickname() << std::endl;
-	std::cout << data << std::endl;
+	std::cout << "********** PART*************" << std::endl;
+	std::cout << "\"" << t_client.getNickname()  << ", " << "^" << data<< "^" << "\"" << std::endl;
 	if (is_regester(t_client))
 			std::cout << "acess allowed" << std::endl;
 	else
