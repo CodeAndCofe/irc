@@ -6,7 +6,7 @@
 /*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 20:15:44 by amandour          #+#    #+#             */
-/*   Updated: 2025/12/25 17:58:15 by amandour         ###   ########.fr       */
+/*   Updated: 2025/12/30 18:59:53 by amandour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void Server::leaveAll(Client *user)
 
 void Server::join(int fd, std::string data, Client *user)
 {  
+	std::cout << "<<<<<<<<<<" + data + ">>>>>>>>>>" << std::endl;
     std::vector<std::string> command = Server::split(data, ' ');
 
     if (command.size() < 2 || command[1].size() < 2)

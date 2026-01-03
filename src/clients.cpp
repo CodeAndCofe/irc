@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:30:07 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/31 21:26:55 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/03 19:47:07 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	Server::isNickNameExist(std::string mybuffer)
 {
 	for (size_t i = 0; i < this->clients.size(); i++)
 	{
-		if (std::strncmp(this->clients[i].getNickname().c_str(), mybuffer.c_str(), mybuffer.length() - 1) == 0)
+		if (mybuffer == this->clients[i].getNickname())
 			return (std::cout << "USER EXIST TWICE" << std::endl, 1);
 	}
 	return  (-1);
@@ -138,13 +138,9 @@ int	Server::client_message(Client &t_client)
 	std::cout << "\"" << t_client.getNickname()  << ", " << "^" << data<< "^" << "\"" << std::endl;
 	if (is_regester(t_client))
 			std::cout << "acess allowed" << std::endl;
-	else
-		std::cout << "no permession regestring ....." << std::endl;
-	std::cout << "*********************************" << std::endl;
 	if (is_regester(t_client) || t_client.getIsRegistred() || t_client.getRegestred())
     {
         CommandHandler(t_client.getFd(), t_client.getBuffer(), &t_client);
-		
         return (0);
     }
 	else if (client_acess(t_client) == -1)

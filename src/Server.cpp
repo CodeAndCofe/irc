@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:31:53 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/30 17:37:03 by amandour         ###   ########.fr       */
+/*   Updated: 2026/01/03 20:07:57 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/Server.hpp"
 #include "../headers/Channel.hpp"
+
 Server::Server()
 {
 	
@@ -180,6 +181,8 @@ void Server::CommandHandler(int fd, std::string &data, Client *client)
 		kick(data, *client);
 	 else if (!std::strncmp(command[0].c_str(), "PRIVMSG", command[0].length()))
         privmsg(data, *client);
+	else if (!std::strncmp(command[0].c_str(), "MODE", command[0].length()))
+		mode(data, *client);
     else
     	Server::send_msg(ERR_UNKNOWNCOMMAND(client->getNickname(), data), client->getFd());
 }
