@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:30:07 by aferryat          #+#    #+#             */
-/*   Updated: 2026/01/03 19:47:07 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/03 21:57:40 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,9 +120,9 @@ int	Server::client_message(Client &t_client)
 	while (bytes != 0)
     {
 		bytes = recv(t_client.getFd(), buffer, 1, MSG_DONTWAIT);
-        if (bytes < 0)
-			return (-1);
-		else if (bytes == 0)
+		if (bytes == 0)
+			return (1);
+		if (bytes < 0)
 			return (-1);
 		buffer[bytes] = '\0';
 		data.append(buffer, bytes);
@@ -134,7 +134,6 @@ int	Server::client_message(Client &t_client)
 	if (data.empty())
 		return (0);
 	t_client.setBuffer(data);
-	std::cout << "********** PART*************" << std::endl;
 	std::cout << "\"" << t_client.getNickname()  << ", " << "^" << data<< "^" << "\"" << std::endl;
 	if (is_regester(t_client))
 			std::cout << "acess allowed" << std::endl;
