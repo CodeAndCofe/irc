@@ -6,7 +6,7 @@
 /*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 21:18:32 by amandour          #+#    #+#             */
-/*   Updated: 2025/12/25 17:58:43 by amandour         ###   ########.fr       */
+/*   Updated: 2026/01/03 20:23:03 by amandour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,4 +171,43 @@ void Channel::sendKickingMsg(Client sender, Channel channel, Client target, std:
 bool   Channel::getTopicMode()
 {
 	return topicMode;
+}
+
+void Channel::removeAdmin(Client client)
+{
+	std::vector<Client>::iterator it = admins.begin();
+	while (it != admins.end())
+	{
+		if (client.getFd() == it->getFd())
+		{
+			this->admins.erase(it);
+			return ;
+		}
+		it++;
+	}
+}
+
+
+void Channel::sendModeMsg(Client client, Channel channel, std::string mode, std::string param)
+{
+    std::vector<Client> members = channel.getMembers();
+	if (!param.empty())
+		mode = mode + ' ' + param;
+    for (size_t i = 0; i < members.size(); i++)
+    {
+        Server::send_msg(RPL_CHANGEMODE(client.getNickname(), channel.getName(), mode), members[i].getFd());
+    }
+}
+void Channel::setTopicMode(bool mode)
+{
+	topicMode = mode;
+}
+void Channel::setInviteMode(bool mode)
+{
+	invOnly = mode;
+}
+
+void Channel::setLimits(size_t number)
+{
+	limits = number;
 }
