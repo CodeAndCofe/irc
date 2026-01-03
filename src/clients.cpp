@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:30:07 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/30 17:02:53 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/31 21:26:55 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,14 +112,14 @@ int	Server::client_acess(Client &t_client)
 
 int	Server::client_message(Client &t_client)
 {
-	char	buffer[1024];
+	char	buffer[2];
 	int		bytes = 1;
 	std::string data;
 
 	buffer[0] = 4;
 	while (bytes != 0)
     {
-		bytes = recv(t_client.getFd(), buffer, sizeof(buffer) - 1, MSG_DONTWAIT);
+		bytes = recv(t_client.getFd(), buffer, 1, MSG_DONTWAIT);
         if (bytes < 0)
 			return (-1);
 		else if (bytes == 0)
@@ -129,7 +129,10 @@ int	Server::client_message(Client &t_client)
 		if (!std::isprint(data.back()))
 			bytes = 0;
     }
-	data = data.substr(0, data.length() - 2);
+	while (data[data.length() - 1] ==  '\r' || data[data.length() - 1] == '\n')
+		data.erase(data.length() - 1);
+	if (data.empty())
+		return (0);
 	t_client.setBuffer(data);
 	std::cout << "********** PART*************" << std::endl;
 	std::cout << "\"" << t_client.getNickname()  << ", " << "^" << data<< "^" << "\"" << std::endl;
