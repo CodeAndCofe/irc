@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 13:24:56 by amandour          #+#    #+#             */
-/*   Updated: 2025/12/25 20:27:27 by aferryat         ###   ########.fr       */
+/*   Updated: 2025/12/30 19:26:24 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@
 #define RPL_NOTOPIC(sender, channel)					        PREFIX " 331 " + sender + " " + channel + " :No topic is set" POSTFIX
 #define RPL_INVITING(nickname, targnick, targchan)  	        ": 341 " + nickname + " " + targnick + " " + targchan + POSTFIX
 #define RPL_INVITE(sender, target, channel)				        ":" + sender + " INVITE " + target + " " + channel + POSTFIX
-#define RPL_JOINMSG(hostname, ipaddress, channelname)	        (":" + hostname + "@" + ipaddress + " JOIN " + channelname + POSTFIX)
+// #define RPL_JOINMSG(hostname, ipaddress, channelname)	        (":" + hostname + "@" + ipaddress + " JOIN " + channelname + POSTFIX)
 #define RPL_JOIN(sender, channel)						        ":" + sender + " JOIN :" + channel + POSTFIX
 #define RPL_PART(sender, channel, reason)                       ":" + sender + " PART " + channel + " :" + reason + POSTFIX
 #define RPL_CHANGEMODE(hostname, channelname, mode)		        (":" + hostname + " MODE " + channelname + " " + mode + POSTFIX)
@@ -64,3 +64,5 @@
 #define RPL_CHANNELMODEIS(client ,channel ,modestring, args)    ": 324 " + client + " " + channel + " " + modestring + " " + args + POSTFIX
 #define RPL_KICKMSG(sender, channel, target, comment)           ":" + sender + " KICK " + channel + " " + target + " :" + comment + POSTFIX
 #define RPL_KICKDEFMSG(sender, channel, target)                 ":" + sender + " KICK " + channel + " " + target + POSTFIX
+
+#define RPL_JOINMSG(hostname, ipaddress, channelname) (":" + hostname + "@" + ipaddress + " JOIN " + channelname + POSTFIX)

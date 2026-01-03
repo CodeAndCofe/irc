@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:07:32 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/26 15:54:22 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/03 17:36:37 by amandour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ class	Server
 		int		client_acess(Client &t_client);
 		int		isNickNameExist(std::string mybuffer);
 		void     privmsg(std::string data, Client user);
+		void     mode(std::string data, Client client);
 };
 
 bool    clean_compare(std::string a, std::string b, size_t l);
