@@ -6,7 +6,7 @@
 /*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:31:53 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/30 17:37:03 by amandour         ###   ########.fr       */
+/*   Updated: 2025/12/30 18:57:17 by amandour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,8 @@ void Server::CommandHandler(int fd, std::string &data, Client *client)
 		kick(data, *client);
 	 else if (!std::strncmp(command[0].c_str(), "PRIVMSG", command[0].length()))
         privmsg(data, *client);
+	else if (!std::strncmp(command[0].c_str(), "MODE", command[0].length()))
+		return ;
     else
     	Server::send_msg(ERR_UNKNOWNCOMMAND(client->getNickname(), data), client->getFd());
 }
