@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 21:18:32 by amandour          #+#    #+#             */
-/*   Updated: 2026/01/03 20:23:03 by amandour         ###   ########.fr       */
+/*   Updated: 2026/01/04 19:48:02 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,8 @@ void Channel::inviteClient(Client client)
 {
 	std::string	mssg;
 	invited.push_back(client);
-	this->addNewMember(client);
-	mssg = "You have been joined channel " + this->getName() + "\n";
+	// this->addNewMember(client);
+	mssg = "You have been INVATED channel " + this->getName() + "\n";
 	send(client.getFd(), mssg.c_str(), mssg.length(), MSG_DONTWAIT);
 }
 
