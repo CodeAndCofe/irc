@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 20:21:07 by amandour          #+#    #+#             */
-/*   Updated: 2025/12/30 18:01:20 by amandour         ###   ########.fr       */
+/*   Updated: 2026/01/04 15:49:23 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ class Client
         std::string    getClientIp();
 
         //****** setters 
+        void        empty_buffer();
         void        setFd(int fd);
         void        setIpadd(std::string ipadd);
         void        setUsername(std::string username);

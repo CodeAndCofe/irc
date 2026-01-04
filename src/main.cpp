@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 20:50:23 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/19 20:53:53 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/04 15:39:01 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int arc, char **arv)
 	struct	pollfd		fds;
 	int					port;
 	int					socket_fd;
-	if (arc != 3)
+	if (arc != 3 || !arv[2][0])
 		return (std::cerr << "invalid executing: should be (./ft_irc \"port\" \"password\")" << std::endl, 1);
 	port = std::atoi(arv[1]);
 	Server	myServer(port, arv[2]);
@@ -40,6 +40,8 @@ int	main(int arc, char **arv)
 	server_address.sin_port = htons(port);
 	server_address.sin_addr.s_addr = INADDR_ANY;
 
+	int f = 1;
+	setsockopt(socket_fd, SOL_SOCKET, SO_REUSEADDR,  &f, sizeof (sockaddr_in));
 	if (bind(socket_fd, (struct sockaddr *) &server_address, sizeof (server_address)) < 0)
 	{
 		close(socket_fd);

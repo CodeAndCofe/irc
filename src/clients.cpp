@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:30:07 by aferryat          #+#    #+#             */
-/*   Updated: 2026/01/03 21:57:40 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/04 16:03:41 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	Server::password_client(Client &t_client, std::string cmd)
 			t_client.setHaspass(true);
 			return (1);
 		}
+		send_msg(ERR_PASSWDMISMATCH, t_client.getFd());
 	}
 	return (1);
 }
@@ -114,16 +115,24 @@ int	Server::client_message(Client &t_client)
 {
 	char	buffer[2];
 	int		bytes = 1;
-	std::string data;
+	std::string data(t_client.getBuffer());
 
+	std::cout << "buffer : " << data << std::endl;
+	t_client.empty_buffer();
 	buffer[0] = 4;
 	while (bytes != 0)
     {
 		bytes = recv(t_client.getFd(), buffer, 1, MSG_DONTWAIT);
 		if (bytes == 0)
+		{
+			t_client.setBuffer(data);
 			return (1);
+		}
 		if (bytes < 0)
-			return (-1);
+		{
+			t_client.setBuffer(data);
+			return (1);
+		}
 		buffer[bytes] = '\0';
 		data.append(buffer, bytes);
 		if (!std::isprint(data.back()))
@@ -140,17 +149,21 @@ int	Server::client_message(Client &t_client)
 	if (is_regester(t_client) || t_client.getIsRegistred() || t_client.getRegestred())
     {
         CommandHandler(t_client.getFd(), t_client.getBuffer(), &t_client);
+		t_client.empty_buffer();
         return (0);
     }
 	else if (client_acess(t_client) == -1)
 	{
 		if (is_regester(t_client))
 			std::cout << "CLIENT REGESTRED WELL" << std::endl;
+		t_client.empty_buffer();
 		return (1);
 	}
 	else
 	{
 		send_msg(ERR_NOTREGISTERED, t_client.getFd());
+		send_msg("\n", t_client.getFd());
+		t_client.empty_buffer();
 		return (1);
 	}
     return 0;

@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 20:16:06 by amandour          #+#    #+#             */
-/*   Updated: 2025/12/26 17:19:27 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/04 15:49:47 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,15 @@ std::string &Client::getBuffer()
 
 void        Client::setBuffer(std::string buffer)
 {
-    _buffer = buffer;
+   if (_buffer.empty())
+        _buffer = buffer;
+    else
+        _buffer.append(buffer);
+}
+
+void     Client::empty_buffer()
+{
+    _buffer = "";
 }
 
 void		Client::setRegesterd(bool val)

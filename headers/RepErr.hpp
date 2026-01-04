@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 13:24:56 by amandour          #+#    #+#             */
-/*   Updated: 2025/12/30 19:26:24 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/04 15:40:09 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 #define ERR_NOTONCHANNEL(target, channel)	   			        PREFIX "442 " + target + " " + channel + " :You're not on that channel" POSTFIX 
 #define ERR_USERNOTINCHANNEL(user, channel) 			        PREFIX "441 " + user + " " + channel + " :They aren't on that channel" POSTFIX 
 #define ERR_NONICKNAMEGIVEN(target)           			        PREFIX "431 " + target + " :No nickname given" POSTFIX 
-#define ERR_PASSWDMISMATCH(target)						        PREFIX "464 " + target + " :Password incorrect" POSTFIX 
+// #define ERR_PASSWDMISMATCH(target)						        PREFIX "464 " + target + " :Password incorrect" POSTFIX 
 #define ERR_ALREADYREGISTRED(target)					        PREFIX "462 " + target + " :You may not reregister" POSTFIX 
 #define ERR_NOTREGISTERED								        "Error: You are not registered."
 #define ERR_CHANNELISFULL(client, channel)				        PREFIX " 471 " + client + " " + channel + " :Cannot join channel (+l)" POSTFIX
@@ -66,3 +66,9 @@
 #define RPL_KICKDEFMSG(sender, channel, target)                 ":" + sender + " KICK " + channel + " " + target + POSTFIX
 
 #define RPL_JOINMSG(hostname, ipaddress, channelname) (":" + hostname + "@" + ipaddress + " JOIN " + channelname + POSTFIX)
+
+
+
+
+
+#define ERR_PASSWDMISMATCH "464 :Password incorrect"

@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:31:53 by aferryat          #+#    #+#             */
-/*   Updated: 2026/01/03 20:07:57 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/04 15:37:08 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ Server::Server()
 Server::Server(int port, char *password)
 {
 	std::string	my_pass(password);
+
 	this->port = port;
 	this->password = my_pass;
 }
@@ -53,6 +54,11 @@ int	Server::Create_Socket()
 
 	fd = socket(AF_INET, SOCK_STREAM, 0);
 	this->ser = fd;
+	if (fcntl(fd, F_SETFL, O_NONBLOCK))
+	{
+		std::cerr << "BAD FILEDESCRIPTOR" << std::endl;
+		return (-1);
+	}
 	return (fd);
 }
 
@@ -81,6 +87,11 @@ int		Server::new_client(sockaddr_in client_address, int i)
 		return (1);
 	}
 	newfds.fd = fd;
+	if (fcntl(newfds.fd, F_SETFL, O_NONBLOCK))
+	{
+		std::cerr << "BAD FILEDESCRIPTOR" << std::endl;
+		return (-1);
+	}
 	newfds.events = POLLIN;
 	this->setfds(newfds);
 	new_client.setFd(fd);
