@@ -12,7 +12,12 @@ bool isDigit(std::string s)
 void Server::mode(std::string data, Client client)
 {
 	std::vector<std::string> command = Server::split(data, ' ');
-	
+
+	if (command.size() < 2)
+	{
+		Server::send_msg((ERR_NEEDMOREPARAMS(data)), client.getFd());
+		return ;
+	}
 	if (command[1][0] == '#')
 	{	
 		Channel *room = getChannel(command[1]);
