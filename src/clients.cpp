@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clients.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:30:07 by aferryat          #+#    #+#             */
-/*   Updated: 2026/01/04 16:03:41 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/04 16:33:09 by amandour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	Server::password_client(Client &t_client, std::string cmd)
 			t_client.setHaspass(true);
 			return (1);
 		}
-		send_msg(ERR_PASSWDMISMATCH, t_client.getFd());
+		send_msg(ERR_PASSWDMISMATCH(pass[1]), t_client.getFd());
 	}
 	return (1);
 }

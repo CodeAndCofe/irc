@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RepErr.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 13:24:56 by amandour          #+#    #+#             */
-/*   Updated: 2026/01/04 15:40:09 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/04 16:32:38 by amandour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 #define ERR_NOTONCHANNEL(target, channel)	   			        PREFIX "442 " + target + " " + channel + " :You're not on that channel" POSTFIX 
 #define ERR_USERNOTINCHANNEL(user, channel) 			        PREFIX "441 " + user + " " + channel + " :They aren't on that channel" POSTFIX 
 #define ERR_NONICKNAMEGIVEN(target)           			        PREFIX "431 " + target + " :No nickname given" POSTFIX 
-// #define ERR_PASSWDMISMATCH(target)						        PREFIX "464 " + target + " :Password incorrect" POSTFIX 
+#define ERR_PASSWDMISMATCH(target)						        PREFIX "464 " + target + " :Password incorrect" POSTFIX 
 #define ERR_ALREADYREGISTRED(target)					        PREFIX "462 " + target + " :You may not reregister" POSTFIX 
 #define ERR_NOTREGISTERED								        "Error: You are not registered."
 #define ERR_CHANNELISFULL(client, channel)				        PREFIX " 471 " + client + " " + channel + " :Cannot join channel (+l)" POSTFIX
@@ -71,4 +71,4 @@
 
 
 
-#define ERR_PASSWDMISMATCH "464 :Password incorrect"
+// #define ERR_PASSWDMISMATCH "464 :Password incorrect"

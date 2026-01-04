@@ -6,7 +6,7 @@
 /*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 20:15:44 by amandour          #+#    #+#             */
-/*   Updated: 2025/12/30 18:59:53 by amandour         ###   ########.fr       */
+/*   Updated: 2026/01/04 19:25:03 by amandour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void Server::join(int fd, std::string data, Client *user)
         {
             Channel room(name[i]);
             room.setAdmin(*user);
+			room.setKey(pass[i]);
             room.addNewMember(*user);
             this->_channels.push_back(room);
             Server::send_msg(RPL_JOIN(user->getNickname(), room.getName()), user->getFd());
