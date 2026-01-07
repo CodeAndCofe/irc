@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RepErr.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 13:24:56 by amandour          #+#    #+#             */
-/*   Updated: 2026/01/04 16:32:38 by amandour         ###   ########.fr       */
+/*   Updated: 2026/01/07 15:26:40 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 #define ERR_NONICKNAMEGIVEN(target)           			        PREFIX "431 " + target + " :No nickname given" POSTFIX 
 #define ERR_PASSWDMISMATCH(target)						        PREFIX "464 " + target + " :Password incorrect" POSTFIX 
 #define ERR_ALREADYREGISTRED(target)					        PREFIX "462 " + target + " :You may not reregister" POSTFIX 
-#define ERR_NOTREGISTERED								        "Error: You are not registered."
+#define ERR_NOTREGISTERED(command)							    PREFIX "451 " + command + " :You have not registered" POSTFIX
 #define ERR_CHANNELISFULL(client, channel)				        PREFIX " 471 " + client + " " + channel + " :Cannot join channel (+l)" POSTFIX
 #define ERR_INVITEONLYCHAN(client, channel)				        PREFIX " 473 " + client + " " + channel + " :Cannot join channel (+i)" POSTFIX
 #define ERR_NEEDMODEPARM(channelname, mode)				        (std::string(": 696 ") + channelname + " * You must specify a parameter for the key mode. " + mode + POSTFIX)

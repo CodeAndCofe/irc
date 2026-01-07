@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 20:15:44 by amandour          #+#    #+#             */
-/*   Updated: 2026/01/04 19:51:03 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/06 12:55:19 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void Server::leaveAll(Client *user)
 
 void Server::join(int fd, std::string data, Client *user)
 {  
-	std::cout << "<<<<<<<<<<" + data + ">>>>>>>>>>" << std::endl;
     std::vector<std::string> command = Server::split(data, ' ');
 
     if (command.size() < 2 || command[1].size() < 2)

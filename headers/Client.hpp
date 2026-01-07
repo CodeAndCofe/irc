@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 20:21:07 by amandour          #+#    #+#             */
-/*   Updated: 2026/01/04 15:49:23 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/07 14:05:24 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ class Client
         std::string    &getUserName();
         std::string    &getNickname();
         bool           getHaspass() const;
-        bool           getIsRegistred() const;
         bool           getHasUser() const;
         bool           getHasNick() const;
 		bool			getRegestred();
@@ -62,7 +61,6 @@ class Client
         void        setUsername(std::string username);
         void        setNickname(std::string nickname);
         void        setHaspass(bool hasPass);
-        void        setIsRegistred(bool isregistred);
         void        setHasUser(bool hasuser);
         void        setBuffer(std::string buffer);
         void        setHasNick(bool hasnick);

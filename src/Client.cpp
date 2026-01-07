@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 20:16:06 by amandour          #+#    #+#             */
-/*   Updated: 2026/01/04 15:49:47 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/07 14:09:25 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,15 +119,7 @@ void Client::setHaspass(bool hasPass)
     _hasPass = hasPass;
 }
 
-void Client::setIsRegistred(bool is_registred)
-{
-    _isRegistred = is_registred;
-}
 
-bool Client::getIsRegistred() const
-{
-    return _isRegistred;
-}
 
 void Client::setHasUser(bool has_user)
 {
@@ -189,8 +181,6 @@ void    Client::create_ip(sockaddr_in &client_address)
 
 std::string    Client::getClientIp()
 {
-    std::cout << "--------Ip---------" << std::endl;
     std::cout << this->client_ip_address << std::endl;
-    std::cout << "-------------------" << std::endl;
     return (this->client_ip_address);
 }

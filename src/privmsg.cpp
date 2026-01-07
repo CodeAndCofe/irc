@@ -16,7 +16,6 @@ void send_channel(std::string receiver, std::string msg, Client sender, Channel 
 		return;
 	}
 	std::vector<Client> members = channel->getMembers();
-	std::cout << members.size() << std::endl;
 	for(size_t i = 0; i < members.size(); i++)
 	{
 		Server::send_msg(RPL_PRIVMSG(sender.getNickname() + "!" + sender.getUserName() + "@" + sender.getIpadd(), receiver, msg), members[i].getFd());

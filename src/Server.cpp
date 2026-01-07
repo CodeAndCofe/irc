@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:31:53 by aferryat          #+#    #+#             */
-/*   Updated: 2026/01/04 17:46:41 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/07 15:21:08 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,7 @@ void	Server::erase_client(int i)
 int		Server::return_events(sockaddr_in client_address)
 {
 	if (poll(this->fds.data(), fds.size(), -1) < 0)
-	{
-		std::cerr << "something went wrong" << std::endl;
 		return (1);
-	}
 	for (size_t i = 0; i < fds.size(); i++)
 	{
 		if (fds[i].fd == this->ser && (fds[i].revents & POLLIN))
@@ -122,14 +119,7 @@ int		Server::return_events(sockaddr_in client_address)
 				continue ;
 		}
 		if (fds[i].fd != this->ser && (fds[i].revents & POLLIN))
-		{
-			if (client_message(this->clients[i - 1]) < 0)
-			{
-				std::cout << "Client disconnected: " << fds[i].fd << std::endl;
-				this->erase_client(i);
-                i--;
-			}
-		}
+			client_message(this->clients[i - 1]);
 		if (fds[i].fd != this->ser && (fds[i].revents & POLLHUP))
 		{
 			std::cout << "Client disconnected: " << fds[i].fd << std::endl;
@@ -171,7 +161,6 @@ Client *Server::getClient(std::string client)
 {
 	for (size_t i = 0; i < clients.size(); i++)
 	{
-		std::cout << clients[i].getNickname() << std::endl;
 		if (std::strncmp(client.c_str(), clients[i].getNickname().c_str(), client.length()) == 0)
 			return &clients[i];
 	}
