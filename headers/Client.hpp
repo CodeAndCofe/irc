@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 20:21:07 by amandour          #+#    #+#             */
-/*   Updated: 2026/01/07 14:05:24 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/11 17:20:32 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 class Client
 {
     private:
-        std::string     client_ip_address;
 		bool			regestred;
         int        		_fd;
         std::string		_ipadd;
@@ -37,11 +36,6 @@ class Client
         Client &operator=(const Client &src);
         ~Client();
 
-        // ip_client for prefix
-
-        void    create_ip(sockaddr_in &client_address);
-
-
         //****** getters
         int            getFd() const;
         std::string    getIpadd() const;
@@ -52,7 +46,6 @@ class Client
         bool           getHasNick() const;
 		bool			getRegestred();
         std::string    &getBuffer();
-        std::string    getClientIp();
 
         //****** setters 
         void        empty_buffer();

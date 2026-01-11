@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   topic.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 18:38:05 by amandour          #+#    #+#             */
-/*   Updated: 2025/12/25 18:02:10 by amandour         ###   ########.fr       */
+/*   Updated: 2026/01/11 18:35:02 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void Server::topic(std::string data, Client *client)
 	{
 		if (topic[2].size() == 1 && topic.size() == 3)
 			room->setTopic("");
-		else if (!room->getTopicMode() || (room->getTopicMode() && room->isAdmine(*client)))
+		else if (room->isAdmine(*client))
 			room->setTopic(data.substr(data.find(':') + 1));
 		else
 			Server::send_msg(ERR_CHANOPRIVSNEEDED(client->getNickname()), client->getFd());

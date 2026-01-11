@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 20:16:06 by amandour          #+#    #+#             */
-/*   Updated: 2026/01/07 14:09:25 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/11 17:20:11 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ Client &Client::operator=(const Client &src)
     this->_hasUser = src._hasUser;
     this->_hasNick = src._hasNick;
 	this->regestred = src.regestred; 
-    this->client_ip_address = src.client_ip_address;
     }
     return *this;
 }
@@ -66,7 +65,6 @@ Client::Client(const Client &src)
     this->_hasUser = src._hasUser;
     this->_hasNick = src._hasNick;
 	this->regestred = src.regestred;
-    this->client_ip_address = src.client_ip_address;
 }
 
 int            Client::getFd() const
@@ -169,18 +167,3 @@ bool		Client::getRegestred()
 	return (this->regestred);
 }
 
-void    Client::create_ip(sockaddr_in &client_address)
-{
-    char    ip[INET_ADDRSTRLEN];
-
-    inet_ntop (AF_INET, &client_address.sin_addr, ip, sizeof (ip));
-    std::string  val(ip);
-    this->client_ip_address = val;
-    this->_ipadd = val;
-}
-
-std::string    Client::getClientIp()
-{
-    std::cout << this->client_ip_address << std::endl;
-    return (this->client_ip_address);
-}

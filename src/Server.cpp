@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:31:53 by aferryat          #+#    #+#             */
-/*   Updated: 2026/01/09 17:43:58 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/11 17:35:34 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ int		Server::new_client(sockaddr_in client_address, int i)
 	newfds.events = POLLIN;
 	this->setfds(newfds);
 	new_client.setFd(fd);
-	new_client.create_ip(client_address);
 	this->setClient(new_client);
 	return (0);
 }
@@ -119,7 +118,14 @@ int		Server::return_events(sockaddr_in client_address)
 				continue ;
 		}
 		if (fds[i].fd != this->ser && (fds[i].revents & POLLIN))
-			client_message(this->clients[i - 1]);
+		{
+			if (client_message(this->clients[i - 1]) == -1)
+			{
+				std::cout << "Client disconnected: " << fds[i].fd << std::endl;
+				this->erase_client(i);
+				i--;
+			}
+		}
 		if (fds[i].fd != this->ser && (fds[i].revents & POLLHUP))
 		{
 			std::cout << "Client disconnected: " << fds[i].fd << std::endl;

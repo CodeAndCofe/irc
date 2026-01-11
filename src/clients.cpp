@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:30:07 by aferryat          #+#    #+#             */
-/*   Updated: 2026/01/11 17:13:54 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/11 17:55:39 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,8 @@ int	Server::client_message(Client &t_client)
 		bytes = recv(t_client.getFd(), buffer, 1, MSG_DONTWAIT);
 		if (bytes == 0)
 		{
-			return (0);
 			t_client.setBuffer(data);
+			return (0);
 		}
 		if (bytes < 0)
 		{
@@ -133,7 +133,7 @@ int	Server::client_message(Client &t_client)
 		if (!std::isprint(data.back()))
 			bytes = 0;
     }
-	if (t_client.getBuffer().length() < 1024)
+	if (t_client.getBuffer().length() > 1024)
 	{
 		t_client.empty_buffer();
 		return (1);
@@ -141,20 +141,20 @@ int	Server::client_message(Client &t_client)
 	while (data[data.length() - 1] ==  '\r' || data[data.length() - 1] == '\n')
 		data.erase(data.length() - 1);
 	if (data.empty())
-		return (0);
+		return (1);
 	t_client.setBuffer(data);
 	if (is_regester(t_client) ||  t_client.getRegestred())
     {
         CommandHandler(t_client.getFd(), t_client.getBuffer(), &t_client);
 		t_client.empty_buffer();
-        return (0);
+        return (1);
     }
 	else if (client_acess(t_client) == -1)
 	{
 		if (is_regester(t_client))
 			std::cout << "new client regestred" << std::endl;
 		t_client.empty_buffer();
-		return (0);
+		return (1);
 	}
 	else
 	{
