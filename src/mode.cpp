@@ -6,7 +6,10 @@
 
 bool isDigit(std::string s)
 {
-    return !s.empty() && std::all_of(s.begin(), s.end(), ::isdigit);
+	for (size_t i = 0;i <s.size(); ++i)
+		if(!isdigit(s[i]))
+			return false;
+    return !s.empty();
 }
 
 void Server::mode(std::string data, Client client)
