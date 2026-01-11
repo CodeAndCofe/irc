@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 20:50:23 by aferryat          #+#    #+#             */
-/*   Updated: 2026/01/06 12:55:05 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/10 13:52:03 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,16 @@ void	handler_signal(int	sig)
 		flag = 1;
 }
 
+bool	is_white_space(std::string s)
+{
+	for (size_t i = 0 ; s.length() > i; i++)
+	{
+		if (std::isspace((unsigned char) s[i]))
+			return (true);
+	}
+	return (false);
+}
+
 int	main(int arc, char **arv)
 {
 	struct	sockaddr_in	server_address;
@@ -27,10 +37,13 @@ int	main(int arc, char **arv)
 	struct	pollfd		fds;
 	int					port;
 	int					socket_fd;
+
 	if (arc != 3 || !arv[2][0])
 		return (std::cerr << "invalid executing: should be (./ft_irc \"port\" \"password\")" << std::endl, 1);
 	port = std::atoi(arv[1]);
 	Server	myServer(port, arv[2]);
+	if (myServer.getPassword().empty() || is_white_space(myServer.getPassword()))
+		return (std::cerr << "invalid executing: should be (./ft_irc \"port\" \"password\")" << std::endl, 1);
 	socket_fd = myServer.Create_Socket();
 	if (socket_fd < 0)
 	{
@@ -62,6 +75,5 @@ int	main(int arc, char **arv)
 		if (myServer.return_events(client_address) == 1)
 			return (1);
 		if (flag == 1)
-			break ;
-	}
+			break ; }
 }

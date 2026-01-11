@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:31:53 by aferryat          #+#    #+#             */
-/*   Updated: 2026/01/07 15:21:08 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/09 17:43:58 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,4 +185,9 @@ void Server::CommandHandler(int fd, std::string &data, Client *client)
 		mode(data, *client);
     else
     	Server::send_msg(ERR_UNKNOWNCOMMAND(client->getNickname(), data), client->getFd());
+}
+
+std::string	Server::getPassword()
+{
+	return (this->password);		
 }

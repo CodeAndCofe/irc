@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:07:32 by aferryat          #+#    #+#             */
-/*   Updated: 2026/01/03 20:10:00 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/09 17:43:01 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ class	Server
 		int		isNickNameExist(std::string mybuffer);
 		void     privmsg(std::string data, Client user);
 		void     mode(std::string data, Client client);
+		std::string	getPassword();
 };
 
 bool    clean_compare(std::string a, std::string b, size_t l);

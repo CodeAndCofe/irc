@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:30:07 by aferryat          #+#    #+#             */
-/*   Updated: 2026/01/07 15:41:56 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/10 13:55:19 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,13 +115,13 @@ int	Server::client_message(Client &t_client)
 
 	t_client.empty_buffer();
 	buffer[0] = 4;
-	while (bytes != 0)
+	while (bytes != 0 && data.length() < 1024)
     {
 		bytes = recv(t_client.getFd(), buffer, 1, MSG_DONTWAIT);
 		if (bytes == 0)
 		{
-			t_client.setBuffer(data);
 			return (0);
+			t_client.setBuffer(data);
 		}
 		if (bytes < 0)
 		{
