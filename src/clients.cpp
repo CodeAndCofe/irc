@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:30:07 by aferryat          #+#    #+#             */
-/*   Updated: 2026/01/12 20:52:29 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/19 17:22:39 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,10 +154,9 @@ int	Server::client_message(Client &t_client)
 	}
 	else
 	{
-		std::vector<std::string> command = Server::split(data, ' ');
-		send_msg(ERR_NOTREGISTERED(command[0]), t_client.getFd());
+		// std::vector<std::string> command = Server::split(data, ' ');
+		send_msg(ERR_NOTREGISTERED(t_client.getBuffer()), t_client.getFd());
 		t_client.empty_buffer();
-		return (0);
 	}
-    return 0;
+    return (0);
 }

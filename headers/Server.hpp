@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:07:32 by aferryat          #+#    #+#             */
-/*   Updated: 2026/01/09 17:43:01 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/19 16:18:38 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ class	Server
 		std::vector<struct pollfd> fds;
 		std::vector<Client> clients;
         std::vector<Channel>           _channels;
-		
+
 	public:
 		int	Create_Socket();
 		int	new_client(sockaddr_in client_address, int i);

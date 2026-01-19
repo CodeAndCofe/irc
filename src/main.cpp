@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 20:50:23 by aferryat          #+#    #+#             */
-/*   Updated: 2026/01/10 13:52:03 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/19 16:29:49 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,27 @@ bool	is_white_space(std::string s)
 	return (false);
 }
 
+bool	is_character(std::string port)
+{
+	for (size_t i = 0; port.length() > i; i++)
+	{
+		if (std::isalpha(port[i]))
+			return (true);
+	}
+	return (false);
+}
+
+bool is_valid_input(char *pass, char *port)
+{
+	std::string	Port(port);
+	std::string	Pass(pass);
+	if (Pass.empty() || is_white_space(Pass))
+		return (1);
+	if (Port.empty() || is_white_space(Port) || is_character(Port))
+		return (1);
+	return (0);
+}
+
 int	main(int arc, char **arv)
 {
 	struct	sockaddr_in	server_address;
@@ -38,12 +59,12 @@ int	main(int arc, char **arv)
 	int					port;
 	int					socket_fd;
 
-	if (arc != 3 || !arv[2][0])
+	if (arc != 3 || !arv[2][0] || !arv[1][0])
 		return (std::cerr << "invalid executing: should be (./ft_irc \"port\" \"password\")" << std::endl, 1);
-	port = std::atoi(arv[1]);
+	if (is_valid_input(arv[2], arv[1]) == 1)
+		return (std::cerr << "invalid executing: should be (./ft_irc \"port\" \"password\")" << std::endl, 1);
+	port = std::atoi(arv[1]); // You should parse the user port !!
 	Server	myServer(port, arv[2]);
-	if (myServer.getPassword().empty() || is_white_space(myServer.getPassword()))
-		return (std::cerr << "invalid executing: should be (./ft_irc \"port\" \"password\")" << std::endl, 1);
 	socket_fd = myServer.Create_Socket();
 	if (socket_fd < 0)
 	{
