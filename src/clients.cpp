@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:30:07 by aferryat          #+#    #+#             */
-/*   Updated: 2026/01/19 17:22:39 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/19 17:29:54 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,9 +126,10 @@ int	Server::client_message(Client &t_client)
 		}
 		buffer[bytes] = '\0';
 		data.append(buffer, bytes);
-		if (!std::isprint(data.back()))
+		if (data[data.size() - 1]== '\n')
 			bytes = 0;
     }
+	std::cout << "hello" << std::endl;
 	if (t_client.getBuffer().length() > 1024)
 	{
 		t_client.empty_buffer();
