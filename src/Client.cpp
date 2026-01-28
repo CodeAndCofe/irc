@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 20:16:06 by amandour          #+#    #+#             */
-/*   Updated: 2026/01/11 17:20:11 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/28 15:00:29 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,15 @@ Client &Client::operator=(const Client &src)
 {
     if (this != &src)
     {
-    this->_fd = src._fd;
-    this->_ipadd = src._ipadd;
-    this->_username = src._username;
-    this->_nickname = src._nickname;
-    this->_hasPass = src._hasPass;
-    this->_isRegistred = src._isRegistred;
-    this->_hasUser = src._hasUser;
-    this->_hasNick = src._hasNick;
-	this->regestred = src.regestred; 
+        this->_fd = src._fd;
+        this->_ipadd = src._ipadd;
+        this->_username = src._username;
+        this->_nickname = src._nickname;
+        this->_hasPass = src._hasPass;
+        this->_isRegistred = src._isRegistred;
+        this->_hasUser = src._hasUser;
+        this->_hasNick = src._hasNick;
+        this->regestred = src.regestred; 
     }
     return *this;
 }

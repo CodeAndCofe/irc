@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 13:24:56 by amandour          #+#    #+#             */
-/*   Updated: 2026/01/07 15:26:40 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/28 15:55:12 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,3 @@
 #define RPL_KICKDEFMSG(sender, channel, target)                 ":" + sender + " KICK " + channel + " " + target + POSTFIX
 
 #define RPL_JOINMSG(hostname, ipaddress, channelname) (":" + hostname + "@" + ipaddress + " JOIN " + channelname + POSTFIX)
-
-
-
-
-
-// #define ERR_PASSWDMISMATCH "464 :Password incorrect"
