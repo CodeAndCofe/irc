@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:31:53 by aferryat          #+#    #+#             */
-/*   Updated: 2026/01/28 15:54:36 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/28 16:27:52 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ void Server::CommandHandler(int fd, std::string &data, Client *client)
 {
 	std::vector<std::string>	command = Server::split(data, ' ');
 	while (!data.empty() && (data.back() == '\r' || data.back() == '\n'))
-        data.pop_back();
+        data.erase(data.length() - 1);
      if (!std::strncmp(command[0].c_str(), "JOIN", command[0].length()))
         join(fd, data, client);
 	  else if (!std::strncmp(command[0].c_str(), "TOPIC", command[0].length()))
