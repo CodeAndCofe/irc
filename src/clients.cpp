@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:30:07 by aferryat          #+#    #+#             */
-/*   Updated: 2026/01/19 17:29:54 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/28 14:49:56 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,6 @@ int	Server::client_message(Client &t_client)
 		if (data[data.size() - 1]== '\n')
 			bytes = 0;
     }
-	std::cout << "hello" << std::endl;
 	if (t_client.getBuffer().length() > 1024)
 	{
 		t_client.empty_buffer();
@@ -138,24 +137,23 @@ int	Server::client_message(Client &t_client)
 	while (data[data.length() - 1] ==  '\r' || data[data.length() - 1] == '\n')
 		data.erase(data.length() - 1);
 	if (data.empty())
-		return (1);
+		return (0);
 	t_client.setBuffer(data);
 	if (is_regester(t_client) ||  t_client.getRegestred())
     {
         CommandHandler(t_client.getFd(), t_client.getBuffer(), &t_client);
 		t_client.empty_buffer();
-        return (1);
+        return (0);
     }
 	else if (client_acess(t_client) == -1)
 	{
 		if (is_regester(t_client))
 			std::cout << "new client regestred" << std::endl;
 		t_client.empty_buffer();
-		return (1);
+		return (0);
 	}
 	else
-	{
-		// std::vector<std::string> command = Server::split(data, ' ');
+	{	
 		send_msg(ERR_NOTREGISTERED(t_client.getBuffer()), t_client.getFd());
 		t_client.empty_buffer();
 	}

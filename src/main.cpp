@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 20:50:23 by aferryat          #+#    #+#             */
-/*   Updated: 2026/01/19 16:29:49 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/28 14:32:01 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	handler_signal(int	sig)
 
 bool	is_white_space(std::string s)
 {
-	for (size_t i = 0 ; s.length() > i; i++)
+	for (size_t i = 0; s.length() > i; i++)
 	{
 		if (std::isspace((unsigned char) s[i]))
 			return (true);
@@ -63,17 +63,14 @@ int	main(int arc, char **arv)
 		return (std::cerr << "invalid executing: should be (./ft_irc \"port\" \"password\")" << std::endl, 1);
 	if (is_valid_input(arv[2], arv[1]) == 1)
 		return (std::cerr << "invalid executing: should be (./ft_irc \"port\" \"password\")" << std::endl, 1);
-	port = std::atoi(arv[1]); // You should parse the user port !!
+	port = std::atoi(arv[1]);
 	Server	myServer(port, arv[2]);
 	socket_fd = myServer.Create_Socket();
 	if (socket_fd < 0)
-	{
 		return (std::cerr << "error while creating socket function faild" << std::endl, 1);
-	}
 	server_address.sin_family = AF_INET;
 	server_address.sin_port = htons(port);
 	server_address.sin_addr.s_addr = INADDR_ANY;
-
 	int f = 1;
 	setsockopt(socket_fd, SOL_SOCKET, SO_REUSEADDR,  &f, sizeof (sockaddr_in));
 	if (bind(socket_fd, (struct sockaddr *) &server_address, sizeof (server_address)) < 0)
