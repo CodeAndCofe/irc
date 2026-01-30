@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 13:24:56 by amandour          #+#    #+#             */
-/*   Updated: 2026/01/30 17:13:26 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/30 17:20:56 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,16 @@
 #define ERR_CANNOTSENDTOCHAN(client, channel)		            PREFIX "404 " + client + channel + " :Cannot send to channel" POSTFIX
 #define ERR_UMODEUNKNOWNFLAG(client)		                    PREFIX "501 " + client + " :Unknown MODE flag" POSTFIX
 
-#define RPL_WELCOME(sender, msg)               			        PREFIX "001 " + sender + " : " + msg + POSTFIX 
 #define RPL_NAMREPLY(sender, channel, users)    		        PREFIX "353 " + sender + " = " + channel + " :" + users + POSTFIX
 #define RPL_ENDOFNAMES(sender, channel)        			        PREFIX "366 " + sender + " " + channel + " :End of /NAMES list." POSTFIX
 #define RPL_TOPIC(sender, channel, topic)				        PREFIX "332 " + sender + " " + channel + " :" + topic + POSTFIX    
 #define RPL_PRIVMSG(sender, target, msg) (":" + std::string(sender) + " PRIVMSG " + std::string(target) + " :" + std::string(msg) + POSTFIX)
 
-#define RPL_NICK(sender, nick)							        ":" + sender + " NICK " + nick + POSTFIX
 #define RPL_NOTOPIC(sender, channel)					        PREFIX " 331 " + sender + " " + channel + " :No topic is set" POSTFIX
 #define RPL_INVITING(nickname, targnick, targchan)  	        ": 341 " + nickname + " " + targnick + " " + targchan + POSTFIX
-#define RPL_INVITE(sender, target, channel)				        ":" + sender + " INVITE " + target + " " + channel + POSTFIX
 #define RPL_JOIN(sender, channel)						        ":" + sender + " JOIN :" + channel + POSTFIX
 #define RPL_PART(sender, channel, reason)                       ":" + sender + " PART " + channel + " :" + reason + POSTFIX
 #define RPL_CHANGEMODE(hostname, channelname, mode)		        (":" + hostname + " MODE " + channelname + " " + mode + POSTFIX)
-#define RPL_UMODEIS(hostname, channelname, mode, user)	        ":" + hostname + " MODE " + channelname + " " + mode + " " + user + POSTFIX
 #define RPL_CHANNELMODEIS(client ,channel ,modestring, args)    ": 324 " + client + " " + channel + " " + modestring + " " + args + POSTFIX
 #define RPL_KICKMSG(sender, channel, target, comment)           ":" + sender + " KICK " + channel + " " + target + " :" + comment + POSTFIX
-#define RPL_KICKDEFMSG(sender, channel, target)                 ":" + sender + " KICK " + channel + " " + target + POSTFIX
-
 #define RPL_JOINMSG(hostname, ipaddress, channelname) (":" + hostname + "@" + ipaddress + " JOIN " + channelname + POSTFIX)
