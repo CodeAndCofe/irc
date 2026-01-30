@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 20:21:18 by amandour          #+#    #+#             */
-/*   Updated: 2025/12/10 18:07:32 by amandour         ###   ########.fr       */
+/*   Updated: 2026/01/30 17:09:55 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ class Channel
         Channel( void );
         Channel(std::string name);
 
-        //getters
         std::string				getKey();
         std::string				getName();
         std::vector<Client>		getAdmins();
@@ -45,7 +44,6 @@ class Channel
 		bool 					getInvOnlyMode();
 		bool 					getTopicMode();
 
-        //setters
         void	setKey(std::string key);
 		void	setTopic(std::string topic);
         void	setAdmin(Client client);

@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 20:50:23 by aferryat          #+#    #+#             */
-/*   Updated: 2026/01/28 14:32:01 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/30 16:52:40 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,6 @@ int	main(int arc, char **arv)
 		if (myServer.return_events(client_address) == 1)
 			return (1);
 		if (flag == 1)
-			break ; }
+			break ;
+	}
 }

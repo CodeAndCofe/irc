@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:07:32 by aferryat          #+#    #+#             */
-/*   Updated: 2026/01/19 16:18:38 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/30 17:17:26 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ class	Server
 
 	public:
 		int	Create_Socket();
-		int	new_client(sockaddr_in client_address, int i);
+		int	new_client(sockaddr_in client_address);
 		void	erase_client(int i);
 		int	return_events(sockaddr_in client_address);
 		void	setfds(struct pollfd fds);

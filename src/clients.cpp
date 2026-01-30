@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:30:07 by aferryat          #+#    #+#             */
-/*   Updated: 2026/01/28 14:49:56 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/30 17:19:46 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,8 +147,7 @@ int	Server::client_message(Client &t_client)
     }
 	else if (client_acess(t_client) == -1)
 	{
-		if (is_regester(t_client))
-			std::cout << "new client regestred" << std::endl;
+		is_regester(t_client);
 		t_client.empty_buffer();
 		return (0);
 	}

@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 12:31:53 by aferryat          #+#    #+#             */
-/*   Updated: 2026/01/28 16:27:52 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/30 17:17:11 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,12 @@ void	Server::setfds(struct pollfd fds)
 	this->fds.push_back(fds);
 }
 
-
 void	Server::setClient(Client &client)
 {
 	this->clients.push_back(client);
 }
 
-int		Server::new_client(sockaddr_in client_address, int i)
+int		Server::new_client(sockaddr_in client_address)
 {
 	int	fd;
 	Client	new_client;
@@ -82,8 +81,7 @@ int		Server::new_client(sockaddr_in client_address, int i)
 	fd = accept(this->ser, (struct sockaddr *) &client_address, &client_len);
 	if (fd < 0)
 	{
-		perror("accept failed");
-		std::cerr << "Error: " << this->fds[i].fd << std::endl;
+		std::cerr << "Error: accept fails" << std::endl;
 		return (1);
 	}
 	newfds.fd = fd;
@@ -108,14 +106,13 @@ void	Server::erase_client(int i)
 
 int		Server::return_events(sockaddr_in client_address)
 {
-	if (poll(this->fds.data(), fds.size(), -1) < 0)
+	if (poll(&this->fds[0], fds.size(), -1) < 0)
 		return (1);
 	for (size_t i = 0; i < fds.size(); i++)
 	{
 		if (fds[i].fd == this->ser && (fds[i].revents & POLLIN))
 		{
-			std::cout << "New client connected"<< std::endl;
-			if (this->new_client(client_address, i) > 0)
+			if (this->new_client(client_address) > 0)
 				continue ;
 		}
 		if (fds[i].fd != this->ser && (fds[i].revents & POLLIN))

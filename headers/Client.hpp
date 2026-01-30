@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 20:21:07 by amandour          #+#    #+#             */
-/*   Updated: 2026/01/11 17:20:32 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/30 17:10:17 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ class Client
         Client &operator=(const Client &src);
         ~Client();
 
-        //****** getters
         int            getFd() const;
         std::string    getIpadd() const;
         std::string    &getUserName();
@@ -47,7 +46,6 @@ class Client
 		bool			getRegestred();
         std::string    &getBuffer();
 
-        //****** setters 
         void        empty_buffer();
         void        setFd(int fd);
         void        setIpadd(std::string ipadd);
