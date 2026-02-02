@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/18 20:50:23 by aferryat          #+#    #+#             */
-/*   Updated: 2026/01/30 16:52:40 by aferryat         ###   ########.fr       */
+/*   Created: 2026/02/01 15:58:27 by aferryat          #+#    #+#             */
+/*   Updated: 2026/02/02 16:55:55 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../headers/Server.hpp"
 
@@ -20,79 +21,47 @@ void	handler_signal(int	sig)
 		flag = 1;
 }
 
-bool	is_white_space(std::string s)
+void    starting_server(Server &ircserv)
 {
-	for (size_t i = 0; s.length() > i; i++)
-	{
-		if (std::isspace((unsigned char) s[i]))
-			return (true);
-	}
-	return (false);
-}
+    sockaddr_in         client_address;
+    struct	pollfd		fds;
 
-bool	is_character(std::string port)
-{
-	for (size_t i = 0; port.length() > i; i++)
-	{
-		if (std::isalpha(port[i]))
-			return (true);
-	}
-	return (false);
-}
-
-bool is_valid_input(char *pass, char *port)
-{
-	std::string	Port(port);
-	std::string	Pass(pass);
-	if (Pass.empty() || is_white_space(Pass))
-		return (1);
-	if (Port.empty() || is_white_space(Port) || is_character(Port))
-		return (1);
-	return (0);
-}
-
-int	main(int arc, char **arv)
-{
-	struct	sockaddr_in	server_address;
-	struct	sockaddr_in	client_address;
-	struct	pollfd		fds;
-	int					port;
-	int					socket_fd;
-
-	if (arc != 3 || !arv[2][0] || !arv[1][0])
-		return (std::cerr << "invalid executing: should be (./ft_irc \"port\" \"password\")" << std::endl, 1);
-	if (is_valid_input(arv[2], arv[1]) == 1)
-		return (std::cerr << "invalid executing: should be (./ft_irc \"port\" \"password\")" << std::endl, 1);
-	port = std::atoi(arv[1]);
-	Server	myServer(port, arv[2]);
-	socket_fd = myServer.Create_Socket();
-	if (socket_fd < 0)
-		return (std::cerr << "error while creating socket function faild" << std::endl, 1);
-	server_address.sin_family = AF_INET;
-	server_address.sin_port = htons(port);
-	server_address.sin_addr.s_addr = INADDR_ANY;
-	int f = 1;
-	setsockopt(socket_fd, SOL_SOCKET, SO_REUSEADDR,  &f, sizeof (sockaddr_in));
-	if (bind(socket_fd, (struct sockaddr *) &server_address, sizeof (server_address)) < 0)
-	{
-		close(socket_fd);
-		return (std::cerr << "bind function faild" << std::endl, 1);
-	}
-	if (listen(socket_fd, 500) < 0)
-	{
-		close(socket_fd);
-		return (std::cerr << "listen function faild" << std::endl, 1);
-	}
-	fds.fd = socket_fd;
+    fds.fd = ircserv.get_server_socket();
 	fds.events = POLLIN;
-	myServer.setfds(fds);
-	std::cout << "---------Server Started---------" << std::endl;
-	std::signal(SIGINT, handler_signal);
-	while (true)
+	ircserv.setfds(fds);
+    std::cout << "------- irc server started --------" << std::endl;
+    while (true)
 	{
-		if (myServer.return_events(client_address) == 1)
-			return (1);
+		if (ircserv.serverProcess(client_address) == 1)
+			return ;
 		if (flag == 1)
 			break ;
 	}
+}
+
+int main(int arc, char **arv)
+{
+    
+    if (arc != 3 || !arv[2][0] || !arv[1][0])
+	    return (std::cerr << "invalid executing: should be (./ft_irc \"port\" \"password\")" << std::endl, 1);
+    try
+    {
+        Server  ircserv(arv[1], arv[2]);
+        ircserv.create_socket();
+        if (listen(ircserv.get_server_socket(), 500) < 0)
+        {
+            close(ircserv.get_server_socket());
+            throw "Error: Listen fails";
+        }
+        std::signal(SIGINT, handler_signal);
+        starting_server(ircserv);
+    }
+    catch(const std::exception &e)
+    {
+        std::cerr << e.what() << std::endl;
+    }
+    catch(const char *e)
+    {
+        std::cerr << e << std::endl;
+    }
 }

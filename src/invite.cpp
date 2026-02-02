@@ -3,18 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   invite.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 17:45:17 by amandour          #+#    #+#             */
-/*   Updated: 2025/12/25 18:02:56 by amandour         ###   ########.fr       */
+/*   Updated: 2026/01/30 17:24:54 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/Channel.hpp"
 #include "../headers/Client.hpp"
 #include "../headers/Server.hpp"
-#include <cstddef>
-#include <vector>
 
 void Server::invite(std::string data, Client client)
 {

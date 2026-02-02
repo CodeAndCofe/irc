@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 20:16:06 by amandour          #+#    #+#             */
-/*   Updated: 2026/01/30 16:39:13 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/02/02 15:32:40 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ Client::Client()
     _username = "";
     _nickname = "";
     _hasPass = false;
-    _isRegistred = false;
     _hasUser = false;
     _hasNick = false;
 	regestred = false; 
@@ -46,7 +45,6 @@ Client &Client::operator=(const Client &src)
         this->_username = src._username;
         this->_nickname = src._nickname;
         this->_hasPass = src._hasPass;
-        this->_isRegistred = src._isRegistred;
         this->_hasUser = src._hasUser;
         this->_hasNick = src._hasNick;
         this->regestred = src.regestred; 
@@ -61,7 +59,6 @@ Client::Client(const Client &src)
     this->_username = src._username;
     this->_nickname = src._nickname;
     this->_hasPass = src._hasPass;
-    this->_isRegistred = src._isRegistred;
     this->_hasUser = src._hasUser;
     this->_hasNick = src._hasNick;
 	this->regestred = src.regestred;

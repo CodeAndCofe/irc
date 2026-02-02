@@ -3,19 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   kick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amandour <amandour@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 18:25:13 by amandour          #+#    #+#             */
-/*   Updated: 2025/12/25 18:00:21 by amandour         ###   ########.fr       */
+/*   Updated: 2026/01/30 17:25:03 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/Channel.hpp"
 #include "../headers/Client.hpp"
 #include "../headers/Server.hpp"
-#include <cstddef>
-#include <cstdio>
-#include <vector>
 
 void Server::kick(std::string data, Client client)
 {

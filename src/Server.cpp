@@ -5,97 +5,162 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/01 12:31:53 by aferryat          #+#    #+#             */
-/*   Updated: 2026/01/30 17:17:11 by aferryat         ###   ########.fr       */
+/*   Created: 2026/02/01 16:03:06 by aferryat          #+#    #+#             */
+/*   Updated: 2026/02/02 16:58:34 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/Server.hpp"
-#include "../headers/Channel.hpp"
+
+Server::Server(char *port, char *password)
+{
+    long    port_val;
+    std::string str_port(port);
+    std::string str_pass(password);
+
+    for (size_t i = 0; i < str_port.length(); i++)
+    {
+        if (!std::isdigit(str_port[i]))
+            throw Server::InvalidPortInput();
+    }
+    if (str_port.length() > 5)
+        throw Server::InvalidPortInput();
+    
+    port_val  = std::atoi(str_port.c_str());
+    if (port_val > 65535 || port_val < 0)
+        throw   Server::InvalidPortInput();
+    for (size_t i = 0; i < str_pass.length(); i++)
+    {
+        if (!std::isprint(str_pass[i]) || std::isspace(str_pass[i]))
+            throw Server::InvalidPassowrdInput();
+    }
+    this->port = port_val;
+    this->password = str_pass;
+}
 
 Server::Server()
 {
-	
-}
-
-Server::Server(int port, char *password)
-{
-	std::string	my_pass(password);
-
-	this->port = port;
-	this->password = my_pass;
+    
 }
 
 Server::Server(Server &copy)
 {
-	this->port = copy.port;
+    this->port = copy.port;
 	this->password = copy.password;
 }
 
-Server	&Server::operator=(Server &copy)
+Server  &Server::operator=(Server &copy)
 {
-	this->port = copy.port;
-	this->password = copy.password;
-	return (*this);
+    (void) copy;
+    return (*this);
 }
 
 Server::~Server()
 {
-	for (size_t i = 1; i < fds.size(); i++)
+    for (size_t i = 1; i < fds.size(); i++)
 	{
 		close(fds[i].fd);
 	}
-	close(this->ser);
+	close(this->serv);
 }
 
-int	Server::Create_Socket()
+// server functions
+void	Server::create_socket()
 {
-	int	fd;
+    struct  sockaddr_in	server_address;
+    int	fd;
+    int res;
 
 	fd = socket(AF_INET, SOCK_STREAM, 0);
-	this->ser = fd;
+    if (fd < 0)
+        throw  "Error: socket fails";
 	if (fcntl(fd, F_SETFL, O_NONBLOCK))
+		throw  "Error: fcntl fails";
+	this->serv = fd;
+    server_address.sin_family = AF_INET;
+	server_address.sin_port = htons(port);
+	server_address.sin_addr.s_addr = INADDR_ANY;
+    int f = 1;
+	res = setsockopt(fd, SOL_SOCKET, SO_REUSEADDR,  &f, sizeof (sockaddr_in));
+    if (res < 0)
+        throw  "Error: setsockopt fails";
+    if (bind(fd, (struct sockaddr *) &server_address, sizeof (server_address)) < 0)
 	{
-		std::cerr << "BAD FILEDESCRIPTOR" << std::endl;
-		return (-1);
+		close(fd);
+		throw  "Error: bind fails";
 	}
-	return (fd);
-}
-
-void	Server::setfds(struct pollfd fds)
-{
-	this->fds.push_back(fds);
-}
-
-void	Server::setClient(Client &client)
-{
-	this->clients.push_back(client);
 }
 
 int		Server::new_client(sockaddr_in client_address)
 {
-	int	fd;
-	Client	new_client;
-	struct	pollfd newfds;
-	socklen_t	client_len = sizeof(client_address);
-	fd = accept(this->ser, (struct sockaddr *) &client_address, &client_len);
+	int	            fd;
+	Client	        new_client;
+	struct	pollfd  newfds;
+	socklen_t	    client_len = sizeof(client_address);
+
+	fd = accept(this->serv, (struct sockaddr *) &client_address, &client_len);
 	if (fd < 0)
-	{
-		std::cerr << "Error: accept fails" << std::endl;
-		return (1);
-	}
+        throw "Error: accept fails";
+	if (fcntl(fd, F_SETFL, O_NONBLOCK))
+        throw   "Error: fcntl fails";
 	newfds.fd = fd;
-	if (fcntl(newfds.fd, F_SETFL, O_NONBLOCK))
-	{
-		std::cerr << "BAD FILEDESCRIPTOR" << std::endl;
-		return (-1);
-	}
 	newfds.events = POLLIN;
 	this->setfds(newfds);
 	new_client.setFd(fd);
 	this->setClient(new_client);
 	return (0);
 }
+
+int Server::serverProcess(sockaddr_in &client_address)
+{
+    if (poll(&this->fds[0], fds.size(), -1) < 0)
+		return (1);
+    for (size_t i = 0; i < fds.size(); i++)
+	{
+		if (fds[i].fd == this->serv && (fds[i].revents & POLLIN))
+		{
+			if (this->new_client(client_address) > 0)
+				continue ;
+		}
+		if (fds[i].fd != this->serv && (fds[i].revents & POLLIN))
+			this->clientHandler(this->clients[i - 1]);
+		if (fds[i].fd != this->serv && (fds[i].revents & POLLHUP))
+		{
+            this->erase_client(i);
+            i--;
+		}
+	}
+    return (0);
+}
+
+
+//getters
+std::string Server::get_password()
+{
+    return (this->password);
+}
+
+int Server::get_port()
+{
+    return (port);
+}
+
+int		Server::get_server_socket()
+{
+    return (this->serv);
+}
+//set data
+
+void	Server::setClient(Client &client)
+{
+	this->clients.push_back(client);
+}
+
+void	Server::setfds(struct pollfd fds)
+{
+	this->fds.push_back(fds);
+}
+//  clear data
 
 void	Server::erase_client(int i)
 {
@@ -104,33 +169,18 @@ void	Server::erase_client(int i)
     fds.erase(fds.begin() + i);
 }
 
-int		Server::return_events(sockaddr_in client_address)
+// errors
+const char* Server::InvalidPortInput::what() const throw()
 {
-	if (poll(&this->fds[0], fds.size(), -1) < 0)
-		return (1);
-	for (size_t i = 0; i < fds.size(); i++)
-	{
-		if (fds[i].fd == this->ser && (fds[i].revents & POLLIN))
-		{
-			if (this->new_client(client_address) > 0)
-				continue ;
-		}
-		if (fds[i].fd != this->ser && (fds[i].revents & POLLIN))
-			client_message(this->clients[i - 1]);
-		if (fds[i].fd != this->ser && (fds[i].revents & POLLHUP))
-		{
-            this->erase_client(i);
-            i--;
-		}
-	}
-	return (0);
+    return "Error: Invalid Port Value";
 }
 
-void  Server::send_msg(std::string data, int fd)
+const char* Server::InvalidPassowrdInput::what() const throw()
 {
-    send(fd, data.c_str(), data.size(), MSG_DONTWAIT);
+    return "Error: Invalid Password Value";
 }
 
+//other uses:
 std::vector<std::string> Server::split(const std::string &str, char delimiter)
 {
     std::vector<std::string> result;
@@ -152,7 +202,6 @@ Channel *Server::getChannel(std::string name)
 	return NULL;
 }
 
-
 Client *Server::getClient(std::string client)
 {
 	for (size_t i = 0; i < clients.size(); i++)
@@ -161,29 +210,4 @@ Client *Server::getClient(std::string client)
 			return &clients[i];
 	}
 	return NULL;
-}
-void Server::CommandHandler(int fd, std::string &data, Client *client)
-{
-	std::vector<std::string>	command = Server::split(data, ' ');
-	while (!data.empty() && (data.back() == '\r' || data.back() == '\n'))
-        data.erase(data.length() - 1);
-     if (!std::strncmp(command[0].c_str(), "JOIN", command[0].length()))
-        join(fd, data, client);
-	  else if (!std::strncmp(command[0].c_str(), "TOPIC", command[0].length()))
-		topic(data, client);
-    else if (!std::strncmp(command[0].c_str(), "INVITE", command[0].length()))
-        invite(data, *client);
-	  else if (!std::strncmp(command[0].c_str(), "KICK", command[0].length()))
-		kick(data, *client);
-	 else if (!std::strncmp(command[0].c_str(), "PRIVMSG", command[0].length()))
-        privmsg(data, *client);
-	else if (!std::strncmp(command[0].c_str(), "MODE", command[0].length()))
-		mode(data, *client);
-    else
-    	Server::send_msg(ERR_UNKNOWNCOMMAND(client->getNickname(), data), client->getFd());
-}
-
-std::string	Server::getPassword()
-{
-	return (this->password);		
 }

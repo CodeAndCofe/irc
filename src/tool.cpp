@@ -5,17 +5,22 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/25 19:17:37 by aferryat          #+#    #+#             */
-/*   Updated: 2025/12/26 15:22:49 by aferryat         ###   ########.fr       */
+/*   Created: 2026/02/02 15:15:31 by aferryat          #+#    #+#             */
+/*   Updated: 2026/02/02 15:21:10 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/Server.hpp"
 
-
-bool    clean_compare(std::string a, std::string b, size_t l)
+bool    clean_compare(std::string a, std::string b)
 {
+    size_t  l = b.length();
     if (strncmp(a.c_str(), b.c_str(), l) == 0)
-        return true;
+        return (true);
     return (false);
+}
+
+void    Server::send_msg(std::string data, int fd)
+{
+    send(fd, data.c_str(), data.size(), MSG_DONTWAIT);
 }

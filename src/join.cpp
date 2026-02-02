@@ -6,16 +6,13 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 20:15:44 by amandour          #+#    #+#             */
-/*   Updated: 2026/01/06 12:55:19 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/01/30 17:24:59 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/Channel.hpp"
 #include "../headers/Server.hpp"
 #include "../headers/RepErr.hpp"
-#include <vector>
-#include <cstddef>
-
 
 void verifyKey(std::string pass, Client *user, Channel *channel, int fd)
 {

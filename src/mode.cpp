@@ -1,8 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mode.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/30 17:28:31 by aferryat          #+#    #+#             */
+/*   Updated: 2026/01/30 17:28:32 by aferryat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 #include "../headers/Channel.hpp"
 #include "../headers/Server.hpp"
-#include <cctype>
-#include <cstddef>
 
 bool isDigit(std::string s)
 {

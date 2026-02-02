@@ -6,7 +6,7 @@
 /*   By: aferryat <aferryat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 20:21:07 by amandour          #+#    #+#             */
-/*   Updated: 2026/01/30 17:10:17 by aferryat         ###   ########.fr       */
+/*   Updated: 2026/02/02 15:02:06 by aferryat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include <iostream>
 #include <string>
-#include <arpa/inet.h>
+
 class Client
 {
     private:
@@ -24,7 +24,6 @@ class Client
         std::string		_nickname;
         std::string		_username;
         bool       		_hasPass;
-        bool       		_isRegistred;
         bool       		_hasUser;
         bool       		_hasNick;
         std::string		_buffer;
